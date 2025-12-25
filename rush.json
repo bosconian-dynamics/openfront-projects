@@ -345,6 +345,11 @@
       "packageName": "@bosconian-dynamics/ofp-map-editor",
       "projectFolder": "apps/map-editor",
       "tags": ["app", "map-editor", "webgl", "lit"]
+    },
+    {
+      "packageName": "@bosconian-dynamics/ofp-data",
+      "projectFolder": "packages/data",
+      "tags": ["package", "database", "postgres", "supabase", "zod", "drizzle"]
     }
     // {
     //   /**
