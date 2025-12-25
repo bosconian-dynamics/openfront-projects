@@ -12,6 +12,12 @@ importers:
 
   ../../external/openfrontio:
     dependencies:
+      openfront-client:
+        specifier: workspace:*
+        version: link:upstream
+
+  ../../external/openfrontio/upstream:
+    dependencies:
       '@aws-sdk/client-s3':
         specifier: ^3.758.0
         version: 3.958.0

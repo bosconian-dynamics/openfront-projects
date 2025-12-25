@@ -96,7 +96,7 @@
    * and set projectFolderMaxDepth to a large number.
    */
   "projectFolderMinDepth": 2,
-  "projectFolderMaxDepth": 2,
+  "projectFolderMaxDepth": 3,
 
   /**
    * Today the npmjs.com registry enforces fairly strict naming rules for packages, but in the early
@@ -338,8 +338,13 @@
   "projects": [
     {
       "packageName": "openfront-client",
+      "projectFolder": "external/openfrontio/upstream",
+      "tags": ["external", "game", "client", "server", "subtree"]
+    },
+    {
+      "packageName": "openfrontio-wrapper",
       "projectFolder": "external/openfrontio",
-      "tags": ["external", "game", "client", "server"]
+      "tags": ["external", "wrapper"]
     }
     // {
     //   /**
