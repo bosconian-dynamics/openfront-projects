@@ -1,0 +1,68 @@
+name: CI
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/devcontainers/typescript-node:1-20-bookworm
+      options: --user root
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Cache PowerShell and dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            /var/cache/apt
+            /usr/share/keyrings
+          key: ${{ runner.os }}-debian-powershell-gh-${{ hashFiles('.github/workflows/ci.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-debian-powershell-gh-
+
+      - name: Install PowerShell
+        run: |
+          apt-get update
+          apt-get install -y wget apt-transport-https software-properties-common
+          wget -q "https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb"
+          dpkg -i packages-microsoft-prod.deb
+          rm packages-microsoft-prod.deb
+          apt-get update
+          apt-get install -y powershell
+          apt-get clean
+          rm -rf /var/lib/apt/lists/*
+
+      - name: Install GitHub CLI
+        run: |
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+          chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+          apt-get update
+          apt-get install -y gh
+          apt-get clean
+          rm -rf /var/lib/apt/lists/*
+
+      - name: Install Rush
+        run: npm install -g @microsoft/rush
+
+      - name: Git config user
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git config --global --add safe.directory $GITHUB_WORKSPACE
+
+      - name: Verify Change Logs
+        run: node common/scripts/install-run-rush.js change --verify
+
+      - name: Rush Install
+        run: node common/scripts/install-run-rush.js install
+
+      - name: Rush rebuild
+        run: node common/scripts/install-run-rush.js rebuild --verbose
