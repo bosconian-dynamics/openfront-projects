@@ -47,6 +47,25 @@ if (-not $rushCommand) {
 }
 Write-Host ""
 
+# Configure git remotes for OpenFrontIO subtree
+Write-Host "🔧 Configuring git remotes for OpenFrontIO subtree..." -ForegroundColor Cyan
+try {
+    git remote get-url openfrontio-fork 2>&1 | Out-Null
+    Write-Host "✓ openfrontio-fork remote already configured" -ForegroundColor Green
+} catch {
+    git remote add openfrontio-fork https://github.com/bosconian-dynamics/OpenFrontIO
+    Write-Host "✓ Added openfrontio-fork remote" -ForegroundColor Green
+}
+
+try {
+    git remote get-url openfrontio-upstream 2>&1 | Out-Null
+    Write-Host "✓ openfrontio-upstream remote already configured" -ForegroundColor Green
+} catch {
+    git remote add openfrontio-upstream https://github.com/openfrontio/OpenFrontIO
+    Write-Host "✓ Added openfrontio-upstream remote" -ForegroundColor Green
+}
+Write-Host ""
+
 # Run rush update
 Write-Host "📦 Installing dependencies with Rush..." -ForegroundColor Cyan
 rush update
@@ -60,6 +79,10 @@ Write-Host "Next steps:"
 Write-Host "  1. Build all packages:     rush build"
 Write-Host "  2. List all packages:      rush list"
 Write-Host "  3. Run tests:              rush test"
+Write-Host ""
+Write-Host "Subtree management:"
+Write-Host "  - Pull updates:            rush sync-subtree"
+Write-Host "  - Push to fork:            pwsh common/scripts/openfrontio-push.ps1"
 Write-Host ""
 Write-Host "For VSCode users:"
 Write-Host "  - Install the 'Dev Containers' extension"

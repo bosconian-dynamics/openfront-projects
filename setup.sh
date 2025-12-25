@@ -39,6 +39,23 @@ else
 fi
 echo ""
 
+# Configure git remotes for OpenFrontIO subtree
+echo "🔧 Configuring git remotes for OpenFrontIO subtree..."
+if git remote get-url openfrontio-fork &> /dev/null; then
+    echo "✓ openfrontio-fork remote already configured"
+else
+    git remote add openfrontio-fork https://github.com/bosconian-dynamics/OpenFrontIO
+    echo "✓ Added openfrontio-fork remote"
+fi
+
+if git remote get-url openfrontio-upstream &> /dev/null; then
+    echo "✓ openfrontio-upstream remote already configured"
+else
+    git remote add openfrontio-upstream https://github.com/openfrontio/OpenFrontIO
+    echo "✓ Added openfrontio-upstream remote"
+fi
+echo ""
+
 # Run rush update
 echo "📦 Installing dependencies with Rush..."
 rush update
@@ -52,6 +69,10 @@ echo "Next steps:"
 echo "  1. Build all packages:     rush build"
 echo "  2. List all packages:      rush list"
 echo "  3. Run tests:              rush test"
+echo ""
+echo "Subtree management:"
+echo "  - Pull updates:            rush sync-subtree"
+echo "  - Push to fork:            pwsh common/scripts/openfrontio-push.ps1"
 echo ""
 echo "For VSCode users:"
 echo "  - Install the 'Dev Containers' extension"
