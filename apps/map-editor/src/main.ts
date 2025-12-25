@@ -117,7 +117,7 @@ export class MapEditorApp extends LitElement {
     this.scene.add(gridHelper);
 
     // Start animation loop
-    this.animate();
+    this.startAnimationLoop();
 
     // Handle window resize
     window.addEventListener('resize', this.handleResize.bind(this));
@@ -139,8 +139,8 @@ export class MapEditorApp extends LitElement {
     this.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
   }
 
-  private animate(): void {
-    this.animationFrameId = requestAnimationFrame(() => this.animate());
+  private startAnimationLoop(): void {
+    this.animationFrameId = requestAnimationFrame(() => this.startAnimationLoop());
 
     if (this.renderer && this.scene && this.camera) {
       this.renderer.render(this.scene, this.camera);

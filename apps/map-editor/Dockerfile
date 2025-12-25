@@ -4,10 +4,12 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
+COPY package.json ./
 
-# Install dependencies
-RUN npm ci
+# Install dependencies (for standalone Docker build)
+# Note: In a Rush monorepo, dependencies are managed at the monorepo level
+# For production, consider building within the monorepo and copying dist
+RUN npm install
 
 # Copy source files
 COPY . .

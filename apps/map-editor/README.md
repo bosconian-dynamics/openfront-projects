@@ -62,12 +62,17 @@ rushx lint:fix
 Build and run using Docker:
 
 ```bash
-# Build the image
+# Build the image (standalone mode)
 docker build -t openfront-map-editor .
 
 # Run the container
 docker run -p 3000:3000 openfront-map-editor
 ```
+
+**Note:** The Dockerfile uses `npm install` for standalone Docker builds. In a Rush monorepo, 
+dependencies are managed at the monorepo level. For production deployments, consider building 
+the application within the monorepo using `rush build` and copying the `dist` folder to your 
+Docker image.
 
 Access the application at `http://localhost:3000`.
 
