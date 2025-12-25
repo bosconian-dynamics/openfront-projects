@@ -11,10 +11,18 @@ import { createDb } from '../db/config.js';
 import { apiSyncLogs } from '../schemas/index.js';
 
 /**
+ * Internal config with required retry parameters
+ */
+type InternalPollingConfig = ApiPollingConfig & {
+  retryAttempts: number;
+  retryDelay: number;
+};
+
+/**
  * OpenFront API Poller class
  */
 export class OpenFrontPoller {
-  private config: ApiPollingConfig;
+  private config: InternalPollingConfig;
   private intervalId?: NodeJS.Timeout;
 
   constructor(config: ApiPollingConfig) {
