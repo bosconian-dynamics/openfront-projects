@@ -1,0 +1,16 @@
+# Docker Compose for local CI testing
+# Provides environmental parity with dev container and CI
+
+version: '3.8'
+
+services:
+  ci:
+    build:
+      context: .
+      dockerfile: .github/Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    working_dir: /workspace
+    command: /bin/bash -c "rush install && rush build"
+    environment:
+      - NODE_ENV=development
