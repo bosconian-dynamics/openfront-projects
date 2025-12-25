@@ -34,20 +34,17 @@ function readPackage(packageJson, context) {
   //  packageJson.dependencies['log4js'] = '0.6.38';
   // }
 
-  // Dynamically inject version field for openfront-client (git subtree)
-  // This keeps the upstream package.json pristine while satisfying Rush requirements
+  // Dynamically inject missing dependencies for openfront-client (git subtree)
+  // This keeps most of the upstream package.json pristine while adding only
+  // genuinely missing dependencies
   if (packageJson.name === 'openfront-client') {
-    context.log('Injecting version field for openfront-client subtree package');
-    packageJson.version = '0.0.0-external';
-    
-    // Ensure build script exists (aliased to build-prod)
-    if (!packageJson.scripts.build) {
-      context.log('Adding build script for openfront-client');
-      packageJson.scripts = {
-        ...packageJson.scripts,
-        build: 'npm run build-prod'
-      };
-    }
+    // Add missing dependencies that are not in upstream but required for build
+    context.log('Adding missing devDependencies for openfront-client');
+    packageJson.devDependencies = {
+      ...packageJson.devDependencies,
+      'glob': '^11.0.0',  // Required by tests/NationNameLength.test.ts
+      'lit-html': '^3.3.1'  // Required by src/client/graphics/layers/PlayerInfoOverlay.ts
+    };
   }
 
   return packageJson;
