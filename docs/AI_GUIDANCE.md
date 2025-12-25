@@ -18,16 +18,20 @@ This is a **Rush monorepo** containing multiple packages organized in a 2-level 
 
 ### Folder Hierarchy
 
-**IMPORTANT**: Packages MUST be exactly 2 levels deep from the repository root:
+**Package Depth Guidelines**: Packages can be 1-2 levels deep from the repository root:
 
 ```
 packages/
-  └── [category]/          ← Level 1: Category (e.g., apps, libraries, tools)
-      └── [package-name]/  ← Level 2: Package directory
+  ├── [category]/          ← Level 1: Category (e.g., apps, libraries, tools)
+  │   └── [package-name]/  ← Level 2: Package directory (preferred for new packages)
+  └── [package-name]/      ← Level 1: Direct package (for special cases like subtrees)
 ```
 
-This constraint is enforced by Rush configuration:
-- `projectFolderMinDepth: 2`
+**Rush Configuration:**
+- `projectFolderMinDepth: 1`
+- `projectFolderMaxDepth: 2`
+
+**Best Practice:** New packages should be 2 levels deep with proper categorization. The 1-level depth is primarily for special cases like git subtrees from upstream repositories.
 - `projectFolderMaxDepth: 2`
 
 ### Current Packages

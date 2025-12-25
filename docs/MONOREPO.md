@@ -26,19 +26,23 @@ openfront-projects/
 
 ### Package Organization
 
-Packages in this monorepo follow a strict 2-level hierarchy:
+Packages in this monorepo are organized with a flexible depth structure (1-2 levels):
 
 ```
 packages/
   ├── [category]/          # Category folder (e.g., apps, libraries, tools)
-  │   └── [package-name]/  # Individual package
+  │   └── [package-name]/  # Individual package (2 levels deep)
+  └── [package-name]/      # Direct package (1 level deep, for special cases)
 ```
 
-This structure:
-- Keeps the repository organized and navigable
-- Encourages proper categorization of projects
-- Makes it easy to find related packages
-- Prevents over-nesting and organizational complexity
+**Guidelines:**
+- **New packages** should be placed 2 levels deep under a category (e.g., `packages/apps/my-app`)
+- **Special cases** like OpenFrontIO (git subtree from upstream) may be 1 level deep
+- Categories help organize related packages (e.g., apps, libraries, tools, prototypes)
+- This structure keeps the repository organized and prevents over-nesting
+
+**Current packages:**
+- `packages/OpenFrontIO` - Main OpenFrontIO game (git subtree, 1 level)
 
 ## Getting Started
 

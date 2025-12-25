@@ -95,7 +95,7 @@
    * To remove these restrictions, you could set projectFolderMinDepth=1
    * and set projectFolderMaxDepth to a large number.
    */
-  "projectFolderMinDepth": 2,
+  "projectFolderMinDepth": 1,
   "projectFolderMaxDepth": 2,
 
   /**
@@ -336,6 +336,11 @@
    * 3. It's useful to have a centralized inventory of all projects and their important metadata.
    */
   "projects": [
+    {
+      "packageName": "openfront-client",
+      "projectFolder": "packages/OpenFrontIO",
+      "tags": ["game", "client", "server"]
+    }
     // {
     //   /**
     //    * The NPM package name of the project (must match package.json)

@@ -57,24 +57,27 @@ openfront-projects/
 │   ├── AI_GUIDANCE.md     # Guidelines for AI/LLM assistance
 │   ├── MONOREPO.md        # Monorepo structure and usage
 │   └── SUBTREE.md         # Git subtree management guide
-├── packages/               # All packages (2 levels deep)
-│   └── OpenFrontIO/        # OpenFrontIO subtree from upstream
+├── packages/               # All packages (1-2 levels deep)
+│   └── OpenFrontIO/        # OpenFrontIO subtree from upstream (1 level)
 └── rush.json               # Main Rush configuration
 ```
 
 ## Key Features
 
-### 2-Level Package Structure
+### Flexible Package Structure
 
-Packages are organized exactly 2 levels deep to maintain consistency:
+Packages are organized with 1-2 level depth for flexibility:
 
 ```
 packages/
-  └── [category]/          # e.g., apps, libraries, tools
-      └── [package-name]/  # Individual package
+  ├── [category]/          # e.g., apps, libraries, tools
+  │   └── [package-name]/  # Individual package (2 levels - preferred)
+  └── [package-name]/      # Direct package (1 level - special cases)
 ```
 
-This structure keeps the repository organized and prevents over-nesting.
+**Guidelines:**
+- New packages should be 2 levels deep with proper categorization
+- Special cases (like git subtrees) may be 1 level deep
 
 ### Git Subtree for OpenFrontIO
 
