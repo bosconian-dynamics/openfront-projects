@@ -82,7 +82,6 @@ import { createPoller } from '@bosconian-dynamics/ofp-data';
 // Configure the poller
 const poller = createPoller({
   apiUrl: 'https://api.openfront.io',
-  apiKey: 'your-api-key',
   pollInterval: 60000, // Poll every 60 seconds
   endpoints: ['/players', '/sessions', '/stats'],
   retryAttempts: 3,
@@ -122,7 +121,6 @@ POSTGRES_PORT=5432
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/openfront
 
 OPENFRONT_API_URL=https://api.openfront.io
-OPENFRONT_API_KEY=
 ```
 
 ### Running Migrations

@@ -23,7 +23,9 @@ type InternalPollingConfig = ApiPollingConfig & {
  */
 export class OpenFrontPoller {
   private config: InternalPollingConfig;
-  private intervalId?: NodeJS.Timeout;
+  private timeoutId?: NodeJS.Timeout;
+  private isRunning: boolean = false;
+  private lastPollTime?: number;
 
   constructor(config: ApiPollingConfig) {
     this.config = {
@@ -37,31 +39,54 @@ export class OpenFrontPoller {
    * Start polling the OpenFront API
    */
   start(): void {
-    if (this.intervalId) {
+    if (this.isRunning) {
       console.warn('Polling is already running');
       return;
     }
 
     console.log('Starting OpenFront API polling...');
+    this.isRunning = true;
+    this.lastPollTime = Date.now();
     
-    // Initial poll
-    this.pollAll();
-
-    // Set up interval polling
-    this.intervalId = setInterval(() => {
-      this.pollAll();
-    }, this.config.pollInterval);
+    // Start the polling cycle
+    this.schedulePoll();
   }
 
   /**
    * Stop polling
    */
   stop(): void {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-      this.intervalId = undefined;
-      console.log('Stopped OpenFront API polling');
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = undefined;
     }
+    this.isRunning = false;
+    console.log('Stopped OpenFront API polling');
+  }
+
+  /**
+   * Schedule the next poll with drift correction
+   */
+  private schedulePoll(): void {
+    if (!this.isRunning) {
+      return;
+    }
+
+    // Execute poll and schedule next
+    this.pollAll().finally(() => {
+      if (!this.isRunning) {
+        return;
+      }
+
+      // Calculate drift correction
+      const now = Date.now();
+      const expectedTime = (this.lastPollTime || now) + this.config.pollInterval;
+      const drift = now - expectedTime;
+      const nextInterval = Math.max(0, this.config.pollInterval - drift);
+
+      this.lastPollTime = expectedTime;
+      this.timeoutId = setTimeout(() => this.schedulePoll(), nextInterval);
+    });
   }
 
   /**
@@ -96,7 +121,6 @@ export class OpenFrontPoller {
         const response = await fetch(url, {
           headers: {
             'Content-Type': 'application/json',
-            ...(this.config.apiKey && { 'Authorization': `Bearer ${this.config.apiKey}` }),
           },
         });
 

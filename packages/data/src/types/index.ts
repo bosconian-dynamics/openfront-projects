@@ -25,7 +25,6 @@ export interface DbConnectionOptions {
  */
 export interface ApiPollingConfig {
   apiUrl: string;
-  apiKey?: string;
   pollInterval: number; // in milliseconds
   endpoints: string[];
   retryAttempts?: number;
