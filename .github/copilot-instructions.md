@@ -29,6 +29,8 @@ openfront-projects/
 ├── external/               # External packages (git subtrees)
 │   └── openfrontio/        # OpenFrontIO game (git subtree)
 ├── apps/                   # Application packages
+├── packages/               # Internal packages
+├── experiments/            # Experimental packages
 ├── rush.json               # Main Rush configuration
 └── README.md               # Main documentation
 ```
@@ -36,8 +38,8 @@ openfront-projects/
 ### Package Organization
 
 - Packages are organized **one level deep** within their category directory
-- Category directories: `apps/`, `external/`
-- Examples: `apps/my-app/`, `external/openfrontio/`
+- Category directories: `apps/`, `external/`, `packages/`, `experiments/`
+- Examples: `apps/my-app/`, `external/openfrontio/`, `packages/my-lib/`, `experiments/prototype/`
 - Configured in rush.json with `projectFolderMinDepth: 2` and `projectFolderMaxDepth: 3`
 
 ## Build and Test Instructions
@@ -156,6 +158,12 @@ Follow this process when creating new packages:
    # For application packages:
    mkdir -p apps/[package-name]
    
+   # For internal library packages:
+   mkdir -p packages/[package-name]
+   
+   # For experimental packages:
+   mkdir -p experiments/[package-name]
+   
    # For external packages (subtrees):
    mkdir -p external/[package-name]
    ```
@@ -177,7 +185,7 @@ Follow this process when creating new packages:
    ```json
    {
      "packageName": "@openfront/package-name",
-     "projectFolder": "apps/package-name"  // or "external/package-name" for external packages
+     "projectFolder": "apps/package-name"  // or "packages/", "experiments/", "external/" as appropriate
    }
    ```
 
