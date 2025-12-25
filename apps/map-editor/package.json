@@ -1,5 +1,5 @@
 {
-  "name": "@openfront/map-editor",
+  "name": "@bosconian-dynamics/map-editor",
   "version": "0.1.0",
   "description": "OpenFront map editor - WebGL-based 2D map editing tool",
   "type": "module",

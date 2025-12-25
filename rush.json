@@ -342,7 +342,7 @@
       "tags": ["external", "game", "client", "server", "subtree"]
     },
     {
-      "packageName": "@openfront/map-editor",
+      "packageName": "@bosconian-dynamics/map-editor",
       "projectFolder": "apps/map-editor",
       "tags": ["app", "map-editor", "webgl", "lit"]
     }
