@@ -151,9 +151,13 @@ rushx format         # Format code with Prettier
 
 Follow this process when creating new packages:
 
-1. **Create package directory** (one level deep):
+1. **Create package directory** (one level deep within appropriate category):
    ```bash
+   # For application packages:
    mkdir -p apps/[package-name]
+   
+   # For external packages (subtrees):
+   mkdir -p external/[package-name]
    ```
 
 2. **Create package.json**:
@@ -173,7 +177,7 @@ Follow this process when creating new packages:
    ```json
    {
      "packageName": "@openfront/package-name",
-     "projectFolder": "apps/package-name"
+     "projectFolder": "apps/package-name"  // or "external/package-name" for external packages
    }
    ```
 
