@@ -19,7 +19,7 @@ Create `packages/my-library/package.json`:
 
 ```json
 {
-  "name": "@openfront/my-library",
+  "name": "@bosconian-dynamics/ofp-my-library",
   "version": "1.0.0",
   "description": "A library for the OpenFront project",
   "main": "dist/index.js",
@@ -87,7 +87,7 @@ Add the package to the `projects` array in `rush.json`:
       "tags": ["game", "client", "server"]
     },
     {
-      "packageName": "@openfront/my-library",
+      "packageName": "@bosconian-dynamics/my-library",
       "projectFolder": "packages/my-library",
       "tags": ["library"]
     }
@@ -125,7 +125,7 @@ To use your new library in another package (e.g., OpenFrontIO):
    ```json
    {
      "dependencies": {
-       "@openfront/my-library": "workspace:^1.0.0"
+       "@bosconian-dynamics/my-library": "workspace:^1.0.0"
      }
    }
    ```
@@ -134,7 +134,7 @@ To use your new library in another package (e.g., OpenFrontIO):
 
 3. Import and use it:
    ```typescript
-   import { hello } from '@openfront/my-library';
+   import { hello } from '@bosconian-dynamics/my-library';
    
    console.log(hello('World'));
    ```
@@ -152,7 +152,7 @@ Here are suggested categories for organizing packages:
 ## Best Practices
 
 1. **Choose descriptive names**: Use clear, descriptive names for packages
-2. **Follow naming conventions**: Use `@openfront/` scope for internal packages
+2. **Follow naming conventions**: Use `@bosconian-dynamics/` scope for internal packages
 3. **Add tags**: Use tags in rush.json for easier filtering (`rush list --only tag:library`)
 4. **Document dependencies**: Clearly document what each package does and its dependencies
 5. **Keep packages focused**: Each package should have a single, well-defined purpose
