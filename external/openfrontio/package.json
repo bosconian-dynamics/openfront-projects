@@ -1,0 +1,19 @@
+{
+  "name": "openfront-client",
+  "version": "0.0.0-external",
+  "private": true,
+  "description": "Wrapper package for OpenFrontIO subtree - provides Rush integration",
+  "scripts": {
+    "build": "cd upstream && npm run build-prod",
+    "build:dev": "cd upstream && npm run build-dev",
+    "build:prod": "cd upstream && npm run build-prod",
+    "start:client": "cd upstream && npm run start:client",
+    "start:server": "cd upstream && npm run start:server",
+    "start:server-dev": "cd upstream && npm run start:server-dev",
+    "dev": "cd upstream && npm run dev",
+    "test": "cd upstream && npm test",
+    "lint": "cd upstream && npm run lint",
+    "lint:fix": "cd upstream && npm run lint:fix",
+    "format": "cd upstream && npm run format"
+  }
+}

@@ -1,7 +1,5 @@
 {
   "name": "openfront-client",
-  "version": "0.0.0-external",
-  "private": true,
   "scripts": {
     "build-dev": "webpack --config webpack.config.js --mode development",
     "build-prod": "webpack --config webpack.config.js --mode production",

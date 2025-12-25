@@ -83,7 +83,7 @@ Add the package to the `projects` array in `rush.json`:
   "projects": [
     {
       "packageName": "openfront-client",
-      "projectFolder": "external/OpenFrontIO",
+      "projectFolder": "external/openfrontio",
       "tags": ["game", "client", "server"]
     },
     {

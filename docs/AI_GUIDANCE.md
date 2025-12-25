@@ -32,11 +32,11 @@ external/
 - `projectFolderMinDepth: 2`
 - `projectFolderMaxDepth: 2`
 
-**Structure:** Package directories are always one level deep from their category directory. Category directories (`packages/`, `external/`) exist at the repo root. This means packages are at depth=2 from repo root (e.g., `packages/my-app` or `external/OpenFrontIO`).
+**Structure:** Package directories are always one level deep from their category directory. Category directories (`packages/`, `external/`) exist at the repo root. This means packages are at depth=2 from repo root (e.g., `packages/my-app` or `external/openfrontio`).
 
 ### Current Packages
 
-1. **external/OpenFrontIO** - The main OpenFrontIO game client and server
+1. **external/openfrontio** - The main OpenFrontIO game client and server
    - Git subtree from fork (primary) and upstream
    - TypeScript-based multiplayer strategy game
    - Uses webpack for bundling

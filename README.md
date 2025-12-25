@@ -100,11 +100,11 @@ external/
 **Structure:**
 - Package directories are always one level deep from their category
 - Category directories (`packages/`, `external/`) exist at repo root
-- Example: `packages/my-app/`, `external/OpenFrontIO/`
+- Example: `packages/my-app/`, `external/openfrontio/`
 
 ### Git Subtree for OpenFrontIO
 
-The `external/OpenFrontIO` directory is maintained as a git subtree with a fork-based workflow:
+The `external/openfrontio` directory is maintained as a git subtree with a fork-based workflow:
 - **Fork**: [bosconian-dynamics/OpenFrontIO](https://github.com/bosconian-dynamics/OpenFrontIO) (primary)
 - **Upstream**: [openfrontio/OpenFrontIO](https://github.com/openfrontio/OpenFrontIO)
 

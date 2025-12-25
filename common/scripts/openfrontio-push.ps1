@@ -6,16 +6,14 @@ $ErrorActionPreference = "Stop"
 # Import the subtree management module
 Import-Module "$PSScriptRoot/modules/SubtreeManagement.psm1" -Force
 
-$SubtreePath = "external/OpenFrontIO"
-$PackageJsonPath = "$SubtreePath/package.json"
+$SubtreePath = "external/openfrontio/upstream"
 
 Write-Host "======================================"
 Write-Host "OpenFrontIO - Push to Fork"
 Write-Host "======================================"
 Write-Host ""
 
-# Save current branch for rollback
-$currentBranch = git rev-parse --abbrev-ref HEAD
+# Save current state for rollback
 $rollbackCommit = git rev-parse HEAD
 
 # Function to rollback on error
@@ -31,36 +29,8 @@ function Invoke-Rollback {
 }
 
 try {
-    # Step 1: Remove version and private fields
-    Write-Host "Removing version and private fields from package.json..." -ForegroundColor Cyan
-    Remove-PackageVersion -PackageJsonPath $PackageJsonPath
-
-    # Step 2: Stage and commit the changes
-    Write-Host ""
-    Write-Host "Staging and committing package.json changes..." -ForegroundColor Cyan
-    git add $PackageJsonPath
-
-    # Check if there are changes to commit
-    $status = git status --porcelain $PackageJsonPath
-    if ($status) {
-        git commit -m "Remove version/private fields before subtree push"
-        Write-Host "✓ Committed package.json changes" -ForegroundColor Green
-    } else {
-        Write-Host "⚠ No changes to commit in package.json" -ForegroundColor Yellow
-    }
-
-    # Step 3: Push to fork
-    Write-Host ""
+    # Push to fork
     Invoke-SubtreePush -Prefix $SubtreePath -Remote "openfrontio-fork" -Branch "main"
-
-    # Step 4: Restore version and private fields
-    Write-Host ""
-    Write-Host "Restoring version and private fields..." -ForegroundColor Cyan
-    Add-PackageVersion -PackageJsonPath $PackageJsonPath -Version "0.0.0-external"
-
-    # Step 5: Stage and commit the restoration
-    git add $PackageJsonPath
-    git commit -m "Restore version/private fields after subtree push"
 
     Write-Host ""
     Write-Host "======================================"
@@ -80,3 +50,4 @@ try {
     Invoke-Rollback
     exit 1
 }
+

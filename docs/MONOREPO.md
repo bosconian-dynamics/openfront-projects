@@ -39,7 +39,7 @@ external/
 **Structure:**
 - Package directories are always one level deep from their category
 - Category directories (`packages/`, `external/`) exist at repo root
-- Example: `packages/my-app/`, `external/OpenFrontIO/`
+- Example: `packages/my-app/`, `external/openfrontio/`
 
 **Guidelines:**
 - Place new internal packages in `packages/[package-name]/`
@@ -48,7 +48,7 @@ external/
 - Package names should be descriptive and follow npm naming conventions
 
 **Current packages:**
-- `external/OpenFrontIO` - Main OpenFrontIO game (git subtree, Rush-managed)
+- `external/openfrontio` - Main OpenFrontIO game (git subtree, Rush-managed)
   - Fork: https://github.com/bosconian-dynamics/OpenFrontIO (primary remote)
   - Upstream: https://github.com/openfrontio/OpenFrontIO (secondary remote)
   - Version tracked by git commit hash (currently: `28e22c9c`)
@@ -119,7 +119,7 @@ rushx <script-name>  # Run a package.json script
 
 ## OpenFrontIO Subtree
 
-The `external/OpenFrontIO` directory is maintained as a git subtree with a fork-based workflow:
+The `external/openfrontio` directory is maintained as a git subtree with a fork-based workflow:
 - **Fork (Primary)**: https://github.com/bosconian-dynamics/OpenFrontIO
 - **Upstream**: https://github.com/openfrontio/OpenFrontIO
 - **Branch**: main
@@ -128,12 +128,12 @@ The `external/OpenFrontIO` directory is maintained as a git subtree with a fork-
 
 Pull updates from upstream:
 ```bash
-git subtree pull --prefix=external/OpenFrontIO openfrontio-upstream main --squash
+git subtree pull --prefix=external/openfrontio openfrontio-upstream main --squash
 ```
 
 Push changes to your fork:
 ```bash
-git subtree push --prefix=external/OpenFrontIO openfrontio-fork main
+git subtree push --prefix=external/openfrontio openfrontio-fork main
 ```
 
 Remotes are already configured:
