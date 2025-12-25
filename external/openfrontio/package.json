@@ -5,7 +5,6 @@
   "type": "module",
   "description": "Wrapper package for OpenFrontIO subtree - provides Rush integration",
   "scripts": {
-    "postinstall": "node -e \"const fs=require('fs');const path=require('path');const src=path.join(__dirname,'node_modules');const dest=path.join(__dirname,'upstream','node_modules');try{fs.symlinkSync(path.relative(path.dirname(dest),src),dest,'junction')}catch(e){if(e.code!=='EEXIST')throw e}\"",
     "build": "cd upstream && npm run build-prod",
     "build:dev": "cd upstream && npm run build-dev",
     "build:prod": "cd upstream && npm run build-prod",
