@@ -21,6 +21,19 @@ This repository uses [Microsoft Rush](https://rushjs.io/) to manage multiple pac
 
 ### Setup
 
+**Quick Setup (Recommended):**
+
+```bash
+# Clone the repository
+git clone https://github.com/bosconian-dynamics/openfront-projects.git
+cd openfront-projects
+
+# Run the setup script
+./setup.sh
+```
+
+**Manual Setup:**
+
 ```bash
 # Clone the repository
 git clone https://github.com/bosconian-dynamics/openfront-projects.git
@@ -124,6 +137,7 @@ rush remove -p <package-name>     # Remove a dependency
 
 - **[docs/MONOREPO.md](docs/MONOREPO.md)** - Detailed monorepo structure and usage guide
 - **[docs/AI_GUIDANCE.md](docs/AI_GUIDANCE.md)** - Guidelines for AI assistants working with this codebase
+- **[docs/ADDING_PACKAGES.md](docs/ADDING_PACKAGES.md)** - Step-by-step guide for adding new packages
 - **[docs/SUBTREE.md](docs/SUBTREE.md)** - Git subtree management guide for OpenFrontIO
 
 ## Development Workflow
@@ -149,7 +163,7 @@ rush remove -p <package-name>     # Remove a dependency
 
 4. Run `rush update`
 
-See [docs/MONOREPO.md](docs/MONOREPO.md) for detailed instructions.
+See [docs/ADDING_PACKAGES.md](docs/ADDING_PACKAGES.md) for a complete step-by-step guide with examples.
 
 ### Working with OpenFrontIO
 
