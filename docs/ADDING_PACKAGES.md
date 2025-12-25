@@ -19,7 +19,7 @@ Create `packages/my-library/package.json`:
 
 ```json
 {
-  "name": "@bosconian-dynamics/my-library",
+  "name": "@bosconian-dynamics/ofp-my-library",
   "version": "1.0.0",
   "description": "A library for the OpenFront project",
   "main": "dist/index.js",
