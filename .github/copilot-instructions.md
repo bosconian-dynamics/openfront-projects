@@ -38,7 +38,7 @@ openfront-projects/
 - Packages are organized **one level deep** within their category directory
 - Category directories: `apps/`, `external/`
 - Examples: `apps/my-app/`, `external/openfrontio/`
-- Configured in rush.json with `projectFolderMinDepth: 2` and `projectFolderMaxDepth: 2`
+- Configured in rush.json with `projectFolderMinDepth: 2` and `projectFolderMaxDepth: 3`
 
 ## Build and Test Instructions
 
@@ -276,7 +276,7 @@ See `docs/SUBTREE.md` for comprehensive subtree management guide.
 
 ## Important Notes
 
-- **Node.js Version**: Use Node.js 20.x or 22.x LTS (specified in `.nvmrc` and rush.json)
+- **Node.js Version**: Use Node.js 20.x or 22.x LTS (rush.json specifies `nodeSupportedVersionRange: ">=20.0.0 <21.0.0 || >=22.0.0 <23.0.0"`, .nvmrc specifies 20.19.0)
 - **Package Manager**: pnpm is managed by Rush - do not install or use pnpm directly
 - **Git Subtree**: OpenFrontIO is a subtree - changes must follow the subtree workflow
 - **Rush First**: Always use Rush commands for dependency and build management
