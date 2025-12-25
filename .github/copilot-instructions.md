@@ -8,7 +8,7 @@ This is a **Rush-based monorepo** for managing OpenFront-related projects and pa
 
 - **Build System**: Rush 5.164.0
 - **Package Manager**: pnpm 9.15.9 (managed by Rush)
-- **Runtime**: Node.js 20.x (LTS) or 22.x (LTS since Oct 2024)
+- **Runtime**: Node.js 20.x or 22.x (both are LTS versions)
 - **Languages**: TypeScript, JavaScript
 - **Primary Project**: OpenFrontIO (multiplayer strategy game maintained as git subtree)
 
@@ -276,7 +276,7 @@ See `docs/SUBTREE.md` for comprehensive subtree management guide.
 
 ## Important Notes
 
-- **Node.js Version**: Use Node.js 20.x (LTS) or 22.x (LTS since Oct 2024). Rush.json specifies `nodeSupportedVersionRange: ">=20.0.0 <21.0.0 || >=22.0.0 <23.0.0"`. The .nvmrc file specifies 20.19.0 as the default version.
+- **Node.js Version**: Use Node.js 20.x or 22.x (both are LTS versions). Rush.json specifies `nodeSupportedVersionRange: ">=20.0.0 <21.0.0 || >=22.0.0 <23.0.0"`. The .nvmrc file specifies 20.19.0 as the default version.
 - **Package Manager**: pnpm is managed by Rush - do not install or use pnpm directly
 - **Git Subtree**: OpenFrontIO is a subtree - changes must follow the subtree workflow
 - **Rush First**: Always use Rush commands for dependency and build management
