@@ -83,7 +83,7 @@ export class OpenFrontPoller {
     let lastError: string | undefined;
 
     // Retry logic
-    for (let attempt = 0; attempt < (this.config.retryAttempts || 3); attempt++) {
+    for (let attempt = 0; attempt < this.config.retryAttempts!; attempt++) {
       try {
         const response = await fetch(url, {
           headers: {
@@ -114,9 +114,9 @@ export class OpenFrontPoller {
       } catch (error) {
         lastError = error instanceof Error ? error.message : String(error);
         
-        if (attempt < (this.config.retryAttempts || 3) - 1) {
+        if (attempt < this.config.retryAttempts! - 1) {
           console.log(`Retry ${attempt + 1} for ${endpoint} after ${this.config.retryDelay}ms`);
-          await this.delay(this.config.retryDelay || 5000);
+          await this.delay(this.config.retryDelay!);
         }
       }
     }
