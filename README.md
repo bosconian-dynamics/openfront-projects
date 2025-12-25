@@ -29,7 +29,9 @@ git clone https://github.com/bosconian-dynamics/openfront-projects.git
 cd openfront-projects
 
 # Run the setup script
-./setup.sh
+./setup.sh        # For Linux/macOS
+# or
+./setup.ps1       # For Windows/PowerShell
 ```
 
 **Manual Setup:**

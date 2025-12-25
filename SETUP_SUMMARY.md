@@ -24,8 +24,9 @@ This document summarizes the Rush monorepo setup completed on December 25, 2024.
 **Implementation:**
 - Added remote: `git remote add openfrontio https://github.com/openfrontio/OpenFrontIO`
 - Created subtree at: `packages/OpenFrontIO`
-- Registered in rush.json as `openfront-client` package
-- Added version 0.28.1 to package.json for Rush compatibility
+- Version tracked by git commit hash: `28e22c9c`
+- **Not** registered in rush.json to preserve upstream state without modifications
+- OpenFrontIO manages its own dependencies independently
 
 **Commands for Management:**
 ```bash

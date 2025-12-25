@@ -42,7 +42,11 @@ packages/
 - This structure keeps the repository organized and prevents over-nesting
 
 **Current packages:**
-- `packages/OpenFrontIO` - Main OpenFrontIO game (git subtree, 1 level)
+- `packages/OpenFrontIO` - Main OpenFrontIO game (git subtree, not Rush-managed)
+  - Maintained as a git subtree from https://github.com/openfrontio/OpenFrontIO
+  - Version tracked by git commit hash (currently: `28e22c9c`)
+  - Not registered in Rush to preserve upstream state
+  - Manage dependencies independently within this package
 
 ## Getting Started
 
