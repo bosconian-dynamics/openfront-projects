@@ -146,6 +146,8 @@ export class OpenFrontPoller {
 
   /**
    * Save sync log to database
+   * Note: Creates a new connection for each log entry. For high-frequency logging,
+   * consider passing a database instance to the constructor.
    */
   private async saveSyncLog(log: Omit<ApiSyncLog, 'id' | 'syncedAt'>): Promise<void> {
     try {

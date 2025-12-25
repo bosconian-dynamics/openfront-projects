@@ -23,7 +23,8 @@ export const players = pgTable('players', {
  */
 export const gameSessions = pgTable('game_sessions', {
   id: uuid('id').primaryKey().defaultRandom(),
-  playerId: uuid('player_id').references(() => players.id),
+  playerId: uuid('player_id')
+    .references(() => players.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
   startedAt: timestamp('started_at').defaultNow().notNull(),
   endedAt: timestamp('ended_at'),
   status: varchar('status', { length: 50 }).notNull(),

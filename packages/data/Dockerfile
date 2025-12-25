@@ -22,11 +22,11 @@ EXPOSE 5432
 # Add initialization scripts directory
 RUN mkdir -p /docker-entrypoint-initdb.d
 
-# Copy initialization script if it exists
-COPY init-db.sh /docker-entrypoint-initdb.d/ 2>/dev/null || true
+# Copy initialization script
+COPY init-db.sh /docker-entrypoint-initdb.d/
 
 # Set proper permissions
-RUN chmod -R 755 /docker-entrypoint-initdb.d || true
+RUN chmod 755 /docker-entrypoint-initdb.d/init-db.sh
 
 # Use the default postgres entrypoint
 CMD ["postgres"]
