@@ -34,5 +34,21 @@ function readPackage(packageJson, context) {
   //  packageJson.dependencies['log4js'] = '0.6.38';
   // }
 
+  // Dynamically inject version field for openfront-client (git subtree)
+  // This keeps the upstream package.json pristine while satisfying Rush requirements
+  if (packageJson.name === 'openfront-client') {
+    context.log('Injecting version field for openfront-client subtree package');
+    packageJson.version = '0.0.0-external';
+    
+    // Ensure build script exists (aliased to build-prod)
+    if (!packageJson.scripts.build) {
+      context.log('Adding build script for openfront-client');
+      packageJson.scripts = {
+        ...packageJson.scripts,
+        build: 'npm run build-prod'
+      };
+    }
+  }
+
   return packageJson;
 }
