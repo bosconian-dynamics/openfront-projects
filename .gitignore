@@ -105,7 +105,7 @@ common/autoinstallers/*/.npmrc
 **/.rush/temp/
 *.lock
 !common/config/rush/pnpm-lock.yaml
-common/config/rush/repo-state.json
+!common/config/rush/repo-state.json
 
 # Common toolchain intermediate files
 temp/

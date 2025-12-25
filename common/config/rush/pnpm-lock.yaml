@@ -10,7 +10,7 @@ importers:
 
   .: {}
 
-  ../../packages/OpenFrontIO:
+  ../../external/OpenFrontIO:
     dependencies:
       '@aws-sdk/client-s3':
         specifier: ^3.758.0
