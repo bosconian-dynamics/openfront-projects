@@ -6,7 +6,7 @@ export default defineConfig({
     target: 'es2020',
     outDir: 'dist',
     sourcemap: true,
-    minify: 'terser',
+    minify: 'esbuild',
     rollupOptions: {
       input: {
         main: './index.html'

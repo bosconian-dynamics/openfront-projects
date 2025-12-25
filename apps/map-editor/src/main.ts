@@ -68,6 +68,7 @@ export class MapEditorApp extends LitElement {
   private camera?: THREE.OrthographicCamera;
   private renderer?: THREE.WebGLRenderer;
   private animationFrameId?: number;
+  private boundHandleResize?: () => void;
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -120,7 +121,8 @@ export class MapEditorApp extends LitElement {
     this.startAnimationLoop();
 
     // Handle window resize
-    window.addEventListener('resize', this.handleResize.bind(this));
+    this.boundHandleResize = this.handleResize.bind(this);
+    window.addEventListener('resize', this.boundHandleResize);
   }
 
   private handleResize(): void {
@@ -152,7 +154,9 @@ export class MapEditorApp extends LitElement {
       cancelAnimationFrame(this.animationFrameId);
     }
 
-    window.removeEventListener('resize', this.handleResize.bind(this));
+    if (this.boundHandleResize) {
+      window.removeEventListener('resize', this.boundHandleResize);
+    }
 
     if (this.renderer) {
       this.renderer.dispose();
