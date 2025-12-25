@@ -72,8 +72,13 @@ openfront-projects/
 │   ├── AI_GUIDANCE.md     # Guidelines for AI/LLM assistance
 │   ├── MONOREPO.md        # Monorepo structure and usage
 │   └── SUBTREE.md         # Git subtree management guide
-├── packages/               # All packages (1-2 levels deep)
-│   └── OpenFrontIO/        # OpenFrontIO subtree from upstream (1 level)
+├── external/               # External packages (subtrees)
+│   └── OpenFrontIO/        # OpenFrontIO subtree from fork
+├── packages/               # Internal packages (1-2 levels deep)
+├── scripts/                # Monorepo automation scripts
+│   ├── modules/            # PowerShell modules
+│   ├── openfrontio-pull.ps1   # Pull OpenFrontIO updates
+│   └── openfrontio-push.ps1   # Push OpenFrontIO changes
 └── rush.json               # Main Rush configuration
 ```
 
@@ -177,7 +182,7 @@ See [docs/ADDING_PACKAGES.md](docs/ADDING_PACKAGES.md) for a complete step-by-st
 
 Pull updates from upstream:
 ```bash
-git subtree pull --prefix=packages/OpenFrontIO openfront-upstream main --squash
+git subtree pull --prefix=packages/OpenFrontIO openfrontio-upstream main --squash
 ```
 
 Push changes to your fork:

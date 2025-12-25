@@ -42,7 +42,7 @@ packages/
 - This structure keeps the repository organized and prevents over-nesting
 
 **Current packages:**
-- `packages/OpenFrontIO` - Main OpenFrontIO game (git subtree, not Rush-managed)
+- `external/OpenFrontIO` - Main OpenFrontIO game (git subtree, not Rush-managed)
   - Fork: https://github.com/bosconian-dynamics/OpenFrontIO (primary remote)
   - Upstream: https://github.com/openfrontio/OpenFrontIO (secondary remote)
   - Version tracked by git commit hash (currently: `28e22c9c`)
@@ -113,7 +113,7 @@ rushx <script-name>  # Run a package.json script
 
 ## OpenFrontIO Subtree
 
-The `packages/OpenFrontIO` directory is maintained as a git subtree with a fork-based workflow:
+The `external/OpenFrontIO` directory is maintained as a git subtree with a fork-based workflow:
 - **Fork (Primary)**: https://github.com/bosconian-dynamics/OpenFrontIO
 - **Upstream**: https://github.com/openfrontio/OpenFrontIO
 - **Branch**: main
@@ -122,12 +122,12 @@ The `packages/OpenFrontIO` directory is maintained as a git subtree with a fork-
 
 Pull updates from upstream:
 ```bash
-git subtree pull --prefix=packages/OpenFrontIO openfront-upstream main --squash
+git subtree pull --prefix=external/OpenFrontIO openfrontio-upstream main --squash
 ```
 
 Push changes to your fork:
 ```bash
-git subtree push --prefix=packages/OpenFrontIO openfront-fork main
+git subtree push --prefix=external/OpenFrontIO openfrontio-fork main
 ```
 
 Remotes are already configured:

@@ -152,13 +152,13 @@ The `packages/OpenFrontIO` directory is a git subtree with a fork-based workflow
 ### Pulling Updates from Upstream
 
 ```bash
-git subtree pull --prefix=packages/OpenFrontIO openfront-upstream main --squash
+git subtree pull --prefix=packages/OpenFrontIO openfrontio-upstream main --squash
 ```
 
 ### Pushing Changes to Your Fork
 
 ```bash
-git subtree push --prefix=packages/OpenFrontIO openfront-fork main
+git subtree push --prefix=packages/OpenFrontIO openfrontio-fork main
 ```
 
 Then create a PR from your fork to upstream on GitHub.

@@ -23,8 +23,8 @@ This document summarizes the Rush monorepo setup completed on December 25, 2024.
 
 **Implementation:**
 - Fork remote: `git remote add openfront-fork https://github.com/bosconian-dynamics/OpenFrontIO`
-- Upstream remote: `git remote add openfront-upstream https://github.com/openfrontio/OpenFrontIO`
-- Created subtree at: `packages/OpenFrontIO`
+- Upstream remote: `git remote add openfrontio-upstream https://github.com/openfrontio/OpenFrontIO`
+- Created subtree at: `external/OpenFrontIO`
 - Version tracked by git commit hash: `28e22c9c`
 - **Not** registered in rush.json to preserve upstream state without modifications
 - OpenFrontIO manages its own dependencies independently
@@ -32,10 +32,10 @@ This document summarizes the Rush monorepo setup completed on December 25, 2024.
 **Fork-Based Workflow:**
 ```bash
 # Pull updates from upstream
-git subtree pull --prefix=packages/OpenFrontIO openfront-upstream main --squash
+git subtree pull --prefix=external/OpenFrontIO openfrontio-upstream main --squash
 
 # Push changes to fork
-git subtree push --prefix=packages/OpenFrontIO openfront-fork main
+git subtree push --prefix=external/OpenFrontIO openfront-fork main
 
 # Then create PR from fork to upstream on GitHub
 ```
@@ -160,9 +160,9 @@ openfront-projects/
    - Run `rush update`
 
 4. **Work with OpenFrontIO:**
-   - Located at: `packages/OpenFrontIO`
-   - Pull updates: `git subtree pull --prefix=packages/OpenFrontIO openfront-upstream main --squash`
-   - Push to fork: `git subtree push --prefix=packages/OpenFrontIO openfront-fork main`
+   - Located at: `external/OpenFrontIO`
+   - Pull updates: `git subtree pull --prefix=external/OpenFrontIO openfrontio-upstream main --squash`
+   - Push to fork: `git subtree push --prefix=external/OpenFrontIO openfront-fork main`
    - Contribute back: Follow `docs/SUBTREE.md`
 
 5. **Use Dev Container (Optional):**
@@ -191,7 +191,7 @@ openfront-projects/
 
 ## Notes
 
-- OpenFrontIO is at 1 level depth (`packages/OpenFrontIO`) as explicitly required
+- OpenFrontIO is at 1 level depth (`external/OpenFrontIO`) as explicitly required
 - New packages should be added at 2 levels depth for organization
 - pnpm-lock.yaml is committed (Rush best practice)
 - Dependencies installed successfully with minor peer dependency warnings (@swc/core)
@@ -201,7 +201,7 @@ openfront-projects/
 
 ✅ Rush-based monorepo initialized
 ✅ Packages configured for 2-level depth structure
-✅ OpenFrontIO added as git subtree at /packages/OpenFrontIO
+✅ OpenFrontIO added as git subtree at /external/OpenFrontIO
 ✅ Latest LTS versions used (Node 20, Rush 5.164.0, pnpm 9.15.9)
 ✅ VSCode dev container configured
 ✅ Comprehensive documentation for AI/LLM guidance
