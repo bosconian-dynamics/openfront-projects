@@ -1,21 +1,21 @@
 # Example: Adding a New Package
 
-This guide shows how to add a new package to the monorepo following the 2-level structure.
+This guide shows how to add a new package to the monorepo.
 
 ## Example Scenario
 
-Let's add a new package called `my-library` in the `libraries` category.
+Let's add a new package called `my-library`.
 
 ## Step 1: Create the Package Directory
 
 ```bash
-mkdir -p packages/libraries/my-library
-cd packages/libraries/my-library
+mkdir -p packages/my-library
+cd packages/my-library
 ```
 
 ## Step 2: Initialize package.json
 
-Create `packages/libraries/my-library/package.json`:
+Create `packages/my-library/package.json`:
 
 ```json
 {
@@ -41,7 +41,7 @@ Create `packages/libraries/my-library/package.json`:
 
 ## Step 3: Add TypeScript Configuration
 
-Create `packages/libraries/my-library/tsconfig.json`:
+Create `packages/my-library/tsconfig.json`:
 
 ```json
 {
@@ -63,7 +63,7 @@ Create `packages/libraries/my-library/tsconfig.json`:
 
 ## Step 4: Create Source Files
 
-Create `packages/libraries/my-library/src/index.ts`:
+Create `packages/my-library/src/index.ts`:
 
 ```typescript
 /**
@@ -88,7 +88,7 @@ Add the package to the `projects` array in `rush.json`:
     },
     {
       "packageName": "@openfront/my-library",
-      "projectFolder": "packages/libraries/my-library",
+      "projectFolder": "packages/my-library",
       "tags": ["library"]
     }
   ]
@@ -113,7 +113,7 @@ This will:
 rush build
 
 # Or build just this package
-cd packages/libraries/my-library
+cd packages/my-library
 rushx build
 ```
 

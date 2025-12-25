@@ -10,7 +10,7 @@ This document summarizes the Rush monorepo setup completed on December 25, 2024.
 - Rush 5.164.0 installed and configured
 - pnpm 9.15.9 as package manager
 - Node.js 20.x/22.x LTS support
-- Flexible package depth (1-2 levels)
+- Package depth: one level within category
 
 **Files Created:**
 - `rush.json` - Main Rush configuration
@@ -155,7 +155,7 @@ openfront-projects/
 
 3. **Add New Packages:**
    - Follow `docs/ADDING_PACKAGES.md`
-   - Place packages 2 levels deep: `packages/[category]/[package-name]`
+   - Place packages one level deep: `packages/[package-name]/`
    - Register in `rush.json`
    - Run `rush update`
 

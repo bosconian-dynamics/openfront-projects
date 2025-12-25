@@ -20,7 +20,7 @@ The `modules/SubtreeManagement.psm1` module provides generic functions for worki
 Pulls updates from the upstream OpenFrontIO repository and adds Rush-compatible fields.
 
 ```powershell
-./scripts/openfrontio-pull.ps1
+./common/scripts/openfrontio-pull.ps1
 ```
 
 **What it does:**
@@ -38,7 +38,7 @@ Pulls updates from the upstream OpenFrontIO repository and adds Rush-compatible 
 Pushes changes to your fork while keeping the package.json clean for PRs.
 
 ```powershell
-./scripts/openfrontio-push.ps1
+./common/scripts/openfrontio-push.ps1
 ```
 
 **What it does:**

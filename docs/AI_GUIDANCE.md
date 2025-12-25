@@ -18,29 +18,30 @@ This is a **Rush monorepo** containing multiple packages organized in a 2-level 
 
 ### Folder Hierarchy
 
-**Package Depth Guidelines**: Packages can be 1-2 levels deep from the repository root:
+**Package Depth Guidelines**: Packages are always one level deep within their category:
 
 ```
 packages/
-  ├── [category]/          ← Level 1: Category (e.g., apps, libraries, tools)
-  │   └── [package-name]/  ← Level 2: Package directory (preferred for new packages)
-  └── [package-name]/      ← Level 1: Direct package (for special cases like subtrees)
+  └── [package-name]/      # Individual package directory
+  
+external/
+  └── [package-name]/      # External package (subtree)
 ```
 
 **Rush Configuration:**
-- `projectFolderMinDepth: 1`
+- `projectFolderMinDepth: 2`
 - `projectFolderMaxDepth: 2`
 
-**Best Practice:** New packages should be 2 levels deep with proper categorization. The 1-level depth is primarily for special cases like git subtrees from upstream repositories.
-- `projectFolderMaxDepth: 2`
+**Structure:** Package directories are always one level deep from their category directory. Category directories (`packages/`, `external/`) exist at the repo root. This means packages are at depth=2 from repo root (e.g., `packages/my-app` or `external/OpenFrontIO`).
 
 ### Current Packages
 
-1. **packages/OpenFrontIO** - The main OpenFrontIO game client and server
-   - Git subtree from upstream repository
+1. **external/OpenFrontIO** - The main OpenFrontIO game client and server
+   - Git subtree from fork (primary) and upstream
    - TypeScript-based multiplayer strategy game
    - Uses webpack for bundling
    - Has both client and server components
+   - Registered in Rush with temporary version field
 
 ## Working with Rush
 

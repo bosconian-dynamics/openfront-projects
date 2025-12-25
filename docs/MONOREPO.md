@@ -26,28 +26,34 @@ openfront-projects/
 
 ### Package Organization
 
-Packages in this monorepo are organized with a flexible depth structure (1-2 levels):
+Packages in this monorepo are organized one level deep within their category:
 
 ```
 packages/
-  ├── [category]/          # Category folder (e.g., apps, libraries, tools)
-  │   └── [package-name]/  # Individual package (2 levels deep)
-  └── [package-name]/      # Direct package (1 level deep, for special cases)
+  └── [package-name]/      # Individual package directory
+  
+external/
+  └── [package-name]/      # External package (subtree)
 ```
 
+**Structure:**
+- Package directories are always one level deep from their category
+- Category directories (`packages/`, `external/`) exist at repo root
+- Example: `packages/my-app/`, `external/OpenFrontIO/`
+
 **Guidelines:**
-- **New packages** should be placed 2 levels deep under a category (e.g., `packages/apps/my-app`)
-- **Special cases** like OpenFrontIO (git subtree from upstream) may be 1 level deep
-- Categories help organize related packages (e.g., apps, libraries, tools, prototypes)
-- This structure keeps the repository organized and prevents over-nesting
+- Place new internal packages in `packages/[package-name]/`
+- External packages (git subtrees) go in `external/[package-name]/`
+- Each package must have a `package.json` at its root
+- Package names should be descriptive and follow npm naming conventions
 
 **Current packages:**
-- `external/OpenFrontIO` - Main OpenFrontIO game (git subtree, not Rush-managed)
+- `external/OpenFrontIO` - Main OpenFrontIO game (git subtree, Rush-managed)
   - Fork: https://github.com/bosconian-dynamics/OpenFrontIO (primary remote)
   - Upstream: https://github.com/openfrontio/OpenFrontIO (secondary remote)
   - Version tracked by git commit hash (currently: `28e22c9c`)
-  - Not registered in Rush to preserve upstream state
-  - Manage dependencies independently within this package
+  - Registered in Rush with `version: "0.0.0-external"` and `private: true`
+  - Scripts manage version field isolation for clean upstream PRs
 
 ## Getting Started
 

@@ -66,7 +66,7 @@ The repository includes PowerShell scripts that automate subtree management and 
 
 **Pull updates from upstream:**
 ```powershell
-./scripts/openfrontio-pull.ps1
+./common/scripts/openfrontio-pull.ps1
 ```
 
 This script will:
@@ -81,7 +81,7 @@ Use this when:
 
 **Push changes to your fork:**
 ```powershell
-./scripts/openfrontio-push.ps1
+./common/scripts/openfrontio-push.ps1
 ```
 
 This script will:
