@@ -6,7 +6,7 @@ $ErrorActionPreference = "Stop"
 # Import the subtree management module
 Import-Module "$PSScriptRoot/modules/SubtreeManagement.psm1" -Force
 
-$SubtreePath = "external/openfrontio/upstream"
+$SubtreePath = "external/openfrontio"
 
 Write-Host "======================================"
 Write-Host "OpenFrontIO - Pull from Upstream"
@@ -22,6 +22,5 @@ Write-Host "✓ Pull completed!" -ForegroundColor Green
 Write-Host "======================================"
 Write-Host ""
 Write-Host "The OpenFrontIO subtree has been updated from upstream."
-Write-Host "The wrapper package at external/openfrontio/ provides Rush integration."
 Write-Host ""
 

@@ -338,7 +338,7 @@
   "projects": [
     {
       "packageName": "openfront-client",
-      "projectFolder": "external/openfrontio/upstream",
+      "projectFolder": "external/openfrontio",
       "tags": ["external", "game", "client", "server", "subtree"]
     }
     // {

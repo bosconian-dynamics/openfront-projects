@@ -6,7 +6,7 @@ $ErrorActionPreference = "Stop"
 # Import the subtree management module
 Import-Module "$PSScriptRoot/modules/SubtreeManagement.psm1" -Force
 
-$SubtreePath = "external/openfrontio/upstream"
+$SubtreePath = "external/openfrontio"
 
 Write-Host "======================================"
 Write-Host "OpenFrontIO - Push to Fork"
