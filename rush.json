@@ -340,11 +340,6 @@
       "packageName": "openfront-client",
       "projectFolder": "external/openfrontio/upstream",
       "tags": ["external", "game", "client", "server", "subtree"]
-    },
-    {
-      "packageName": "openfrontio-wrapper",
-      "projectFolder": "external/openfrontio",
-      "tags": ["external", "wrapper"]
     }
     // {
     //   /**
