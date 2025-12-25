@@ -96,11 +96,17 @@ packages/
 
 ### Git Subtree for OpenFrontIO
 
-The `packages/OpenFrontIO` directory is maintained as a git subtree from [openfrontio/OpenFrontIO](https://github.com/openfrontio/OpenFrontIO). This allows:
+The `packages/OpenFrontIO` directory is maintained as a git subtree with a fork-based workflow:
+- **Fork**: [bosconian-dynamics/OpenFrontIO](https://github.com/bosconian-dynamics/OpenFrontIO) (primary)
+- **Upstream**: [openfrontio/OpenFrontIO](https://github.com/openfrontio/OpenFrontIO)
+
+This allows:
 
 - Working on OpenFrontIO within the monorepo
-- Submitting PRs back to the upstream repository
-- Staying in sync with upstream changes
+- Pushing changes to your fork
+- Submitting PRs from fork to upstream
+- Pulling updates from upstream
+- Maintaining branch naming parity
 
 See [docs/SUBTREE.md](docs/SUBTREE.md) for details.
 
@@ -171,12 +177,15 @@ See [docs/ADDING_PACKAGES.md](docs/ADDING_PACKAGES.md) for a complete step-by-st
 
 Pull updates from upstream:
 ```bash
-git subtree pull --prefix=packages/OpenFrontIO openfrontio main --squash
+git subtree pull --prefix=packages/OpenFrontIO openfront-upstream main --squash
 ```
 
-Push changes to upstream (requires permissions):
+Push changes to your fork:
 ```bash
-git subtree push --prefix=packages/OpenFrontIO openfrontio main
+git subtree push --prefix=packages/OpenFrontIO openfront-fork main
+```
+
+Then create a PR from your fork to upstream on GitHub.
 ```
 
 ## Technology Stack
@@ -191,7 +200,8 @@ git subtree push --prefix=packages/OpenFrontIO openfrontio main
 
 - [Rush Documentation](https://rushjs.io/)
 - [Rush Best Practices](https://rushjs.io/pages/best_practices/repo_setup/)
-- [OpenFrontIO Repository](https://github.com/openfrontio/OpenFrontIO)
+- [OpenFrontIO Fork](https://github.com/bosconian-dynamics/OpenFrontIO)
+- [OpenFrontIO Upstream](https://github.com/openfrontio/OpenFrontIO)
 - [pnpm Documentation](https://pnpm.io/)
 
 ## License

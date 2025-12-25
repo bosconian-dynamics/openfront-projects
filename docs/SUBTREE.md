@@ -8,30 +8,43 @@ A git subtree allows you to include another repository as a subdirectory of your
 
 ## OpenFrontIO Subtree
 
-The `packages/OpenFrontIO` directory is a git subtree of the upstream OpenFrontIO repository:
+The `packages/OpenFrontIO` directory is a git subtree of the OpenFrontIO repository:
 
-- **Upstream Repository**: https://github.com/openfrontio/OpenFrontIO
-- **Remote Name**: `openfrontio`
+- **Fork (Primary)**: https://github.com/bosconian-dynamics/OpenFrontIO
+- **Upstream**: https://github.com/openfrontio/OpenFrontIO
+- **Fork Remote Name**: `openfront-fork`
+- **Upstream Remote Name**: `openfront-upstream`
 - **Branch**: `main`
 - **Local Path**: `packages/OpenFrontIO`
 
+This setup allows you to:
+- Work on OpenFrontIO within the monorepo
+- Push changes to your fork
+- Open PRs from your fork to upstream
+- Pull updates from upstream
+- Maintain branch naming parity between fork and subtree
+
 ## Initial Setup
 
-The subtree has already been set up, but if you need to add it again or add additional subtrees, here's how:
+The subtree and remotes have already been set up, but if you need to reconfigure them:
 
-### Add the Remote
+### Add the Remotes
 
 ```bash
-git remote add -f openfrontio https://github.com/openfrontio/OpenFrontIO
+# Add your fork as the primary remote
+git remote add -f openfront-fork https://github.com/bosconian-dynamics/OpenFrontIO
+
+# Add the upstream as a secondary remote
+git remote add -f openfront-upstream https://github.com/openfrontio/OpenFrontIO
 ```
 
 ### Add the Subtree
 
 ```bash
-git subtree add --prefix=packages/OpenFrontIO openfrontio main --squash
+git subtree add --prefix=packages/OpenFrontIO openfront-fork main --squash
 ```
 
-The `--squash` flag combines all upstream commits into a single commit in your repository.
+The `--squash` flag combines all commits into a single commit in your repository.
 
 ## Regular Operations
 
@@ -40,7 +53,7 @@ The `--squash` flag combines all upstream commits into a single commit in your r
 To get the latest changes from the upstream OpenFrontIO repository:
 
 ```bash
-git subtree pull --prefix=packages/OpenFrontIO openfrontio main --squash
+git subtree pull --prefix=packages/OpenFrontIO openfront-upstream main --squash
 ```
 
 This will:
@@ -50,35 +63,33 @@ This will:
 
 **Best Practice**: Pull updates regularly to stay in sync with upstream.
 
-### Pushing Changes to Upstream
+### Pushing Changes to Your Fork
 
-If you've made changes in `packages/OpenFrontIO` that should be contributed back to the upstream repository:
+To push changes from `packages/OpenFrontIO` to your fork:
 
 ```bash
-git subtree push --prefix=packages/OpenFrontIO openfrontio main
+git subtree push --prefix=packages/OpenFrontIO openfront-fork main
 ```
 
 This will:
 1. Extract commits that touch `packages/OpenFrontIO`
-2. Push them to the upstream repository
+2. Push them to your fork
 
-**Note**: You need write access to the upstream repository for this to work. If you don't have access, you can:
-1. Fork the upstream repository
-2. Push to your fork
-3. Create a pull request to the upstream repository
+You can then open a PR from your fork to the upstream repository on GitHub.
 
-### Working with a Fork
+### Working with Branches
 
-If you've forked the upstream repository to contribute:
+The fork-based workflow allows branch naming parity between your fork and the monorepo subtree:
 
 ```bash
-# Add your fork as a remote
-git remote add openfrontio-fork https://github.com/YOUR_USERNAME/OpenFrontIO
+# Push a feature branch to your fork
+git subtree push --prefix=packages/OpenFrontIO openfront-fork feature-branch
 
-# Push to your fork
-git subtree push --prefix=packages/OpenFrontIO openfrontio-fork main
+# Pull a specific branch from your fork
+git subtree pull --prefix=packages/OpenFrontIO openfront-fork feature-branch --squash
 
-# Then create a PR on GitHub from your fork to the upstream repository
+# Pull a specific branch from upstream
+git subtree pull --prefix=packages/OpenFrontIO openfront-upstream feature-branch --squash
 ```
 
 ## Development Workflow
@@ -99,13 +110,15 @@ git subtree push --prefix=packages/OpenFrontIO openfrontio-fork main
 
 3. **Sync with Upstream**: Periodically pull updates
    ```bash
-   git subtree pull --prefix=packages/OpenFrontIO openfrontio main --squash
+   git subtree pull --prefix=packages/OpenFrontIO openfront-upstream main --squash
    ```
 
 4. **Contribute Back**: When ready to contribute to upstream
    ```bash
-   git subtree push --prefix=packages/OpenFrontIO openfrontio main
-   # Or push to your fork and create a PR
+   # Push to your fork
+   git subtree push --prefix=packages/OpenFrontIO openfront-fork main
+   
+   # Then create a PR on GitHub from your fork to the upstream repository
    ```
 
 ### Handling Conflicts
@@ -117,19 +130,21 @@ If you encounter merge conflicts when pulling from upstream:
 3. Stage the resolved files: `git add packages/OpenFrontIO`
 4. Continue the merge: `git commit`
 
-## Advantages of Subtrees
+## Advantages of Fork-Based Subtree Workflow
 
 1. **Simple Cloning**: No special commands needed, just `git clone`
 2. **No Extra Files**: No `.gitmodules` or submodule complexity
 3. **Offline Work**: All code is in your repository
 4. **Easy to Understand**: Works like regular git operations
 5. **Flexible Workflow**: Can work on upstream code within your monorepo
+6. **Branch Parity**: Maintain consistent branch names between fork and subtree
+7. **PR Workflow**: Easy to open PRs against upstream via your fork
 
 ## Disadvantages and Considerations
 
 1. **History Complexity**: Subtree operations create merge commits
 2. **Repository Size**: Includes full history of subtree (mitigated with `--squash`)
-3. **Push Complexity**: Pushing to upstream requires extracting relevant commits
+3. **Push Complexity**: Pushing requires extracting relevant commits
 4. **Learning Curve**: Less familiar than submodules for some teams
 
 ## Troubleshooting
@@ -139,25 +154,34 @@ If you encounter merge conflicts when pulling from upstream:
 If you get an error about the remote not existing:
 
 ```bash
-git remote add -f openfrontio https://github.com/openfrontio/OpenFrontIO
+# Add your fork
+git remote add -f openfront-fork https://github.com/bosconian-dynamics/OpenFrontIO
+
+# Add upstream
+git remote add -f openfront-upstream https://github.com/openfrontio/OpenFrontIO
 ```
 
 ### Push Rejected
 
-If push is rejected (no write access):
+If push is rejected (no write access to your fork):
 
-1. Fork the upstream repository on GitHub
-2. Add your fork as a remote
-3. Push to your fork
-4. Create a PR from your fork
+1. Verify you're pushing to your fork: `git remote -v`
+2. Check you have write permissions to your fork
+3. Ensure you're authenticated with GitHub
 
 ### Stale References
 
 If you're having issues with stale references:
 
 ```bash
-git fetch openfrontio
-git subtree pull --prefix=packages/OpenFrontIO openfrontio main --squash
+# Fetch from fork
+git fetch openfront-fork
+
+# Fetch from upstream
+git fetch openfront-upstream
+
+# Then pull as needed
+git subtree pull --prefix=packages/OpenFrontIO openfront-upstream main --squash
 ```
 
 ## Advanced Operations
@@ -175,7 +199,10 @@ git log -- packages/OpenFrontIO
 To verify the subtree is set up correctly:
 
 ```bash
-git remote -v | grep openfrontio
+# Check remotes
+git remote -v | grep openfront
+
+# Check subtree history
 git log --grep="git-subtree-dir: packages/OpenFrontIO"
 ```
 

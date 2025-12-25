@@ -22,19 +22,22 @@ This document summarizes the Rush monorepo setup completed on December 25, 2024.
 ### ✅ 2. OpenFrontIO Git Subtree
 
 **Implementation:**
-- Added remote: `git remote add openfrontio https://github.com/openfrontio/OpenFrontIO`
+- Fork remote: `git remote add openfront-fork https://github.com/bosconian-dynamics/OpenFrontIO`
+- Upstream remote: `git remote add openfront-upstream https://github.com/openfrontio/OpenFrontIO`
 - Created subtree at: `packages/OpenFrontIO`
 - Version tracked by git commit hash: `28e22c9c`
 - **Not** registered in rush.json to preserve upstream state without modifications
 - OpenFrontIO manages its own dependencies independently
 
-**Commands for Management:**
+**Fork-Based Workflow:**
 ```bash
-# Pull updates
-git subtree pull --prefix=packages/OpenFrontIO openfrontio main --squash
+# Pull updates from upstream
+git subtree pull --prefix=packages/OpenFrontIO openfront-upstream main --squash
 
-# Push changes
-git subtree push --prefix=packages/OpenFrontIO openfrontio main
+# Push changes to fork
+git subtree push --prefix=packages/OpenFrontIO openfront-fork main
+
+# Then create PR from fork to upstream on GitHub
 ```
 
 ### ✅ 3. VSCode Dev Container
@@ -158,7 +161,8 @@ openfront-projects/
 
 4. **Work with OpenFrontIO:**
    - Located at: `packages/OpenFrontIO`
-   - Pull updates: `git subtree pull --prefix=packages/OpenFrontIO openfrontio main --squash`
+   - Pull updates: `git subtree pull --prefix=packages/OpenFrontIO openfront-upstream main --squash`
+   - Push to fork: `git subtree push --prefix=packages/OpenFrontIO openfront-fork main`
    - Contribute back: Follow `docs/SUBTREE.md`
 
 5. **Use Dev Container (Optional):**

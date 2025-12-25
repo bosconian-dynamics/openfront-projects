@@ -43,7 +43,8 @@ packages/
 
 **Current packages:**
 - `packages/OpenFrontIO` - Main OpenFrontIO game (git subtree, not Rush-managed)
-  - Maintained as a git subtree from https://github.com/openfrontio/OpenFrontIO
+  - Fork: https://github.com/bosconian-dynamics/OpenFrontIO (primary remote)
+  - Upstream: https://github.com/openfrontio/OpenFrontIO (secondary remote)
   - Version tracked by git commit hash (currently: `28e22c9c`)
   - Not registered in Rush to preserve upstream state
   - Manage dependencies independently within this package
@@ -112,7 +113,8 @@ rushx <script-name>  # Run a package.json script
 
 ## OpenFrontIO Subtree
 
-The `packages/OpenFrontIO` directory is maintained as a git subtree from the upstream repository:
+The `packages/OpenFrontIO` directory is maintained as a git subtree with a fork-based workflow:
+- **Fork (Primary)**: https://github.com/bosconian-dynamics/OpenFrontIO
 - **Upstream**: https://github.com/openfrontio/OpenFrontIO
 - **Branch**: main
 
@@ -120,17 +122,18 @@ The `packages/OpenFrontIO` directory is maintained as a git subtree from the ups
 
 Pull updates from upstream:
 ```bash
-git subtree pull --prefix=packages/OpenFrontIO openfrontio main --squash
+git subtree pull --prefix=packages/OpenFrontIO openfront-upstream main --squash
 ```
 
-Push changes to upstream:
+Push changes to your fork:
 ```bash
-git subtree push --prefix=packages/OpenFrontIO openfrontio main
+git subtree push --prefix=packages/OpenFrontIO openfront-fork main
 ```
 
-Add the remote (if not already added):
+Remotes are already configured:
 ```bash
-git remote add openfrontio https://github.com/openfrontio/OpenFrontIO
+# View remotes
+git remote -v | grep openfront
 ```
 
 ## Development Environment

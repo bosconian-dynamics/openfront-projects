@@ -4,7 +4,7 @@ This document provides guidance for AI assistants (like GitHub Copilot, ChatGPT,
 
 ## Repository Context
 
-This is a **Rush monorepo** containing multiple packages organized in a 2-level hierarchy. The primary package currently in the monorepo is OpenFrontIO, which is maintained as a git subtree from https://github.com/openfrontio/OpenFrontIO.
+This is a **Rush monorepo** containing multiple packages organized in a 2-level hierarchy. The primary package currently in the monorepo is OpenFrontIO, which is maintained as a git subtree with a fork-based workflow (fork: https://github.com/bosconian-dynamics/OpenFrontIO, upstream: https://github.com/openfrontio/OpenFrontIO).
 
 ## Key Technologies
 
@@ -147,25 +147,28 @@ npm run format      # Format all files with Prettier
 
 ## Subtree Management
 
-The `packages/OpenFrontIO` directory is a git subtree. When working with it:
+The `packages/OpenFrontIO` directory is a git subtree with a fork-based workflow:
 
 ### Pulling Updates from Upstream
 
 ```bash
-git subtree pull --prefix=packages/OpenFrontIO openfrontio main --squash
+git subtree pull --prefix=packages/OpenFrontIO openfront-upstream main --squash
 ```
 
-### Pushing Changes to Upstream
+### Pushing Changes to Your Fork
 
 ```bash
-git subtree push --prefix=packages/OpenFrontIO openfrontio main
+git subtree push --prefix=packages/OpenFrontIO openfront-fork main
 ```
 
-### Why Subtree?
+Then create a PR from your fork to upstream on GitHub.
+
+### Why Fork-Based Subtree?
 
 - Allows working on OpenFrontIO within this monorepo
-- Enables submitting PRs back to upstream repository
-- Maintains clean history with squashed commits
+- Enables submitting PRs from fork to upstream repository
+- Maintains branch naming parity between fork and subtree
+- Clean history with squashed commits
 - No submodule complexity
 
 ## Code Style and Conventions
@@ -251,7 +254,8 @@ When making changes:
 - [Rush Documentation](https://rushjs.io/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [PixiJS Documentation](https://pixijs.com/)
-- [OpenFrontIO GitHub](https://github.com/openfrontio/OpenFrontIO)
+- [OpenFrontIO Fork](https://github.com/bosconian-dynamics/OpenFrontIO)
+- [OpenFrontIO Upstream](https://github.com/openfrontio/OpenFrontIO)
 
 ## Troubleshooting
 
