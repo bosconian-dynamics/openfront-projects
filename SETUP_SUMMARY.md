@@ -66,8 +66,8 @@ git subtree push --prefix=external/openfrontio openfront-fork main
    - Rush commands reference
    - Best practices
 
-3. **docs/AI_GUIDANCE.md**
-   - Repository context for AI assistants
+3. **AGENTS.md**
+   - Repository context for AI coding agents
    - Technology stack overview
    - Common patterns and conventions
    - Troubleshooting guide
@@ -127,9 +127,9 @@ openfront-projects/
 │   └── temp/                   # Rush temporary files (gitignored)
 ├── docs/
 │   ├── ADDING_PACKAGES.md     # Package creation guide
-│   ├── AI_GUIDANCE.md         # AI/LLM assistance guidelines
 │   ├── MONOREPO.md            # Monorepo structure guide
 │   └── SUBTREE.md             # Git subtree management
+├── AGENTS.md                  # AI coding agent guidelines
 ├── packages/
 │   └── OpenFrontIO/           # OpenFrontIO git subtree
 ├── .gitattributes             # Git attributes
