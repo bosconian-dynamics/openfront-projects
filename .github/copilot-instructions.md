@@ -22,10 +22,10 @@ openfront-projects/
 │   ├── config/rush/        # Rush configuration files
 │   └── scripts/            # Monorepo automation scripts
 ├── docs/                   # Documentation
-│   ├── AI_GUIDANCE.md      # Detailed AI/LLM guidance
 │   ├── MONOREPO.md         # Monorepo structure guide
 │   ├── ADDING_PACKAGES.md  # Package creation guide
 │   └── SUBTREE.md          # Git subtree management
+├── AGENTS.md               # Instructions for AI coding agents
 ├── external/               # External packages (git subtrees)
 │   └── openfrontio/        # OpenFrontIO game (git subtree)
 ├── apps/                   # Application packages
@@ -277,7 +277,7 @@ See `docs/SUBTREE.md` for comprehensive subtree management guide.
 ## Additional Resources
 
 - **Rush Documentation**: https://rushjs.io/
-- **Detailed AI Guidance**: See `docs/AI_GUIDANCE.md` for comprehensive guidelines
+- **AI Agent Guidelines**: See `AGENTS.md` in the repository root for comprehensive guidelines
 - **Monorepo Structure**: See `docs/MONOREPO.md` for detailed structure documentation
 - **Package Management**: See `docs/ADDING_PACKAGES.md` for package creation guide
 - **Subtree Workflow**: See `docs/SUBTREE.md` for git subtree management
