@@ -73,9 +73,10 @@ openfront-projects/
 │       ├── openfrontio-pull.ps1   # Pull OpenFrontIO updates
 │       └── openfrontio-push.ps1   # Push OpenFrontIO changes
 ├── docs/                   # Documentation
-│   ├── AI_GUIDANCE.md     # Guidelines for AI/LLM assistance
+│   ├── ADDING_PACKAGES.md # How to add new packages
 │   ├── MONOREPO.md        # Monorepo structure and usage
 │   └── SUBTREE.md         # Git subtree management guide
+├── AGENTS.md               # Guidelines for AI coding agents
 ├── external/               # External packages (subtrees)
 │   └── OpenFrontIO/        # OpenFrontIO subtree from fork
 ├── packages/               # Internal packages (one level deep)
@@ -151,8 +152,8 @@ rush remove -p <package-name>     # Remove a dependency
 
 ## Documentation
 
+- **[AGENTS.md](AGENTS.md)** - Guidelines for AI coding agents working with this codebase
 - **[docs/MONOREPO.md](docs/MONOREPO.md)** - Detailed monorepo structure and usage guide
-- **[docs/AI_GUIDANCE.md](docs/AI_GUIDANCE.md)** - Guidelines for AI assistants working with this codebase
 - **[docs/ADDING_PACKAGES.md](docs/ADDING_PACKAGES.md)** - Step-by-step guide for adding new packages
 - **[docs/SUBTREE.md](docs/SUBTREE.md)** - Git subtree management guide for OpenFrontIO
 
