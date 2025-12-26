@@ -3,8 +3,8 @@ services:
     image: mcr.microsoft.com/devcontainers/typescript-node:1-20-bookworm
     container_name: openfront-devcontainer
     volumes:
-      # Mount workspace root (two levels up from .devcontainer/)
-      - ../..:/workspaces/openfront-projects:cached
+      # Mount workspace root (one level up from .devcontainer/)
+      - ..:/workspaces/openfront-projects:cached
       # Note: ~/.gitconfig mount removed - Codespaces manages git config automatically
     command: sleep infinity
     working_dir: /workspaces/openfront-projects
