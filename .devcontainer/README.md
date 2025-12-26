@@ -140,6 +140,16 @@ If `rush update` fails during post-create:
 2. Try running `rush update` manually after the container starts
 3. Check the Rush logs in `common/temp/`
 
+### GitHub Codespaces Prebuild Failure (Error 1300)
+
+**Issue**: Codespaces prebuild fails with error code 1300 (UnifiedContainersGeneralError) during container creation.
+
+**Root Cause**: The volume mount path in `docker-compose.yaml` was attempting to mount a directory outside the repository boundary. The path `../..` from `.devcontainer/` resolves to the parent of the repository, which violates security constraints in Codespaces prebuilds.
+
+**Solution**: Changed the volume mount from `../..` to `..` to correctly point to the repository root (one level up from `.devcontainer/` directory).
+
+**Fixed in**: Commit c9bf3ea (December 2025)
+
 ## Related Files
 
 - `devcontainer.json` - Main devcontainer configuration
