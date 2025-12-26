@@ -5,7 +5,7 @@ services:
     volumes:
       # Mount workspace root (two levels up from .devcontainer/)
       - ../..:/workspaces/openfront-projects:cached
-      - ~/.gitconfig:/home/node/.gitconfig:ro
+      # Note: ~/.gitconfig mount removed - Codespaces manages git config automatically
     command: sleep infinity
     working_dir: /workspaces/openfront-projects
     user: node
