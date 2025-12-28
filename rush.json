@@ -339,7 +339,7 @@
     {
       "packageName": "openfront-client",
       "projectFolder": "external/openfrontio",
-      "tags": ["external", "game", "client", "server", "subtree"]
+      "tags": ["external", "game", "client", "server", "worktree"]
     },
     {
       "packageName": "@bosconian-dynamics/ofp-map-editor",

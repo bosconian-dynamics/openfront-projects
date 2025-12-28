@@ -39,21 +39,9 @@ else
 fi
 echo ""
 
-# Configure git remotes for OpenFrontIO subtree
-echo "🔧 Configuring git remotes for OpenFrontIO subtree..."
-if git remote get-url openfrontio-fork &> /dev/null; then
-    echo "✓ openfrontio-fork remote already configured"
-else
-    git remote add openfrontio-fork https://github.com/bosconian-dynamics/OpenFrontIO
-    echo "✓ Added openfrontio-fork remote"
-fi
-
-if git remote get-url openfrontio-upstream &> /dev/null; then
-    echo "✓ openfrontio-upstream remote already configured"
-else
-    git remote add openfrontio-upstream https://github.com/openfrontio/OpenFrontIO
-    echo "✓ Added openfrontio-upstream remote"
-fi
+# Setup git worktrees for external dependencies
+echo "🔧 Setting up git worktrees..."
+./scripts/setup-worktrees.sh
 echo ""
 
 # Run rush update
@@ -70,17 +58,17 @@ echo "  1. Build all packages:     rush build"
 echo "  2. List all packages:      rush list"
 echo "  3. Run tests:              rush test"
 echo ""
-echo "Subtree management:"
-echo "  - Pull updates:            rush sync-subtree"
-echo "  - Push to fork:            pwsh common/scripts/openfrontio-push.ps1"
+echo "Working with OpenFrontIO:"
+echo "  - Pull updates:            cd external/openfrontio && git pull"
+echo "  - Push changes:            cd external/openfrontio && git push"
 echo ""
 echo "For VSCode users:"
 echo "  - Install the 'Dev Containers' extension"
 echo "  - Reopen this folder in container for a ready-to-go environment"
 echo ""
 echo "Documentation:"
-echo "  - AGENTS.md               - AI coding agent guidelines"
-echo "  - docs/MONOREPO.md        - Monorepo structure and usage"
-echo "  - docs/ADDING_PACKAGES.md - How to add new packages"
-echo "  - docs/SUBTREE.md         - Git subtree management"
+echo "  - AGENTS.md                  - AI coding agent guidelines"
+echo "  - docs/MONOREPO.md           - Monorepo structure and usage"
+echo "  - docs/ADDING_PACKAGES.md    - How to add new packages"
+echo "  - docs/WORKTREE_WORKFLOW.md  - Git worktree workflow"
 echo ""

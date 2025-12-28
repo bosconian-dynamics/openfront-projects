@@ -122,3 +122,6 @@ dist-storybook/
 # Heft temporary files
 .cache/
 .heft/
+
+# Git worktrees (separate repositories, not tracked in monorepo)
+external/openfrontio/

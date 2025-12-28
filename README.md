@@ -19,9 +19,39 @@ This repository uses [Microsoft Rush](https://rushjs.io/) to manage multiple pac
 - npm 10.x or later
 - Git
 
-### Setup
+### 🚀 First-Time Setup
 
-**Quick Setup (Recommended):**
+This monorepo uses git worktrees for external dependencies. Before running Rush commands, you need to set up the worktrees:
+
+**Linux/macOS:**
+```bash
+# Clone the repository
+git clone https://github.com/bosconian-dynamics/openfront-projects.git
+cd openfront-projects
+
+# Run the setup script
+./scripts/setup-worktrees.sh
+rush update
+rush build
+```
+
+**Windows (PowerShell):**
+```powershell
+# Clone the repository
+git clone https://github.com/bosconian-dynamics/openfront-projects.git
+cd openfront-projects
+
+# Run the setup script
+.\scripts\setup-worktrees.ps1
+rush update
+rush build
+```
+
+See [docs/WORKTREE_WORKFLOW.md](docs/WORKTREE_WORKFLOW.md) for detailed information about working with worktrees.
+
+### Alternative: Quick Setup Script
+
+**Quick Setup (Uses existing setup scripts):**
 
 ```bash
 # Clone the repository
@@ -34,22 +64,7 @@ cd openfront-projects
 ./setup.ps1       # For Windows/PowerShell
 ```
 
-**Manual Setup:**
-
-```bash
-# Clone the repository
-git clone https://github.com/bosconian-dynamics/openfront-projects.git
-cd openfront-projects
-
-# Install Rush globally
-npm install -g @microsoft/rush
-
-# Install all package dependencies
-rush update
-
-# Build all packages
-rush build
-```
+Note: The `setup.sh` and `setup.ps1` scripts will need to be updated to call the worktree setup script.
 
 ### Using VSCode Dev Container
 
@@ -75,12 +90,16 @@ openfront-projects/
 ├── docs/                   # Documentation
 │   ├── ADDING_PACKAGES.md # How to add new packages
 │   ├── MONOREPO.md        # Monorepo structure and usage
-│   └── SUBTREE.md         # Git subtree management guide
+│   ├── SUBTREE.md         # Git subtree management guide (legacy)
+│   └── WORKTREE_WORKFLOW.md # Git worktree workflow guide
 ├── AGENTS.md               # Guidelines for AI coding agents
-├── external/               # External packages (subtrees)
-│   └── OpenFrontIO/        # OpenFrontIO subtree from fork
+├── external/               # External packages (git worktrees)
+│   └── openfrontio/        # OpenFrontIO worktree (setup required)
 ├── packages/               # Internal packages (one level deep)
 │   └── [package-name]/     # Individual package directories
+├── scripts/                # Monorepo setup scripts
+│   ├── setup-worktrees.sh  # Setup worktrees (Linux/macOS)
+│   └── setup-worktrees.ps1 # Setup worktrees (Windows)
 └── rush.json               # Main Rush configuration
 ```
 
@@ -95,29 +114,32 @@ packages/
   └── [package-name]/      # Individual package directory
   
 external/
-  └── [package-name]/      # External package (subtree)
+  └── [package-name]/      # External package (worktree)
 ```
 
 **Structure:**
 - Package directories are always one level deep from their category
 - Category directories (`packages/`, `external/`) exist at repo root
 - Example: `packages/my-app/`, `external/openfrontio/`
+- External packages use git worktrees (not tracked in monorepo)
 
-### Git Subtree for OpenFrontIO
+### Git Worktree for OpenFrontIO
 
-The `external/openfrontio` directory is maintained as a git subtree with a fork-based workflow:
-- **Fork**: [bosconian-dynamics/OpenFrontIO](https://github.com/bosconian-dynamics/OpenFrontIO) (primary)
+The `external/openfrontio` directory is maintained as a git worktree:
+- **Repository**: [bosconian-dynamics/OpenFrontIO](https://github.com/bosconian-dynamics/OpenFrontIO)
 - **Upstream**: [openfrontio/OpenFrontIO](https://github.com/openfrontio/OpenFrontIO)
+- **Setup Required**: Run `./scripts/setup-worktrees.sh` after cloning
 
 This allows:
 
 - Working on OpenFrontIO within the monorepo
+- Local-only modifications for Rush compatibility
 - Pushing changes to your fork
-- Submitting PRs from fork to upstream
+- Submitting PRs to upstream
 - Pulling updates from upstream
-- Maintaining branch naming parity
+- Clean separation (worktree not tracked in monorepo)
 
-See [docs/SUBTREE.md](docs/SUBTREE.md) for details.
+See [docs/WORKTREE_WORKFLOW.md](docs/WORKTREE_WORKFLOW.md) for details.
 
 ### Package Manager
 
@@ -155,7 +177,8 @@ rush remove -p <package-name>     # Remove a dependency
 - **[AGENTS.md](AGENTS.md)** - Guidelines for AI coding agents working with this codebase
 - **[docs/MONOREPO.md](docs/MONOREPO.md)** - Detailed monorepo structure and usage guide
 - **[docs/ADDING_PACKAGES.md](docs/ADDING_PACKAGES.md)** - Step-by-step guide for adding new packages
-- **[docs/SUBTREE.md](docs/SUBTREE.md)** - Git subtree management guide for OpenFrontIO
+- **[docs/WORKTREE_WORKFLOW.md](docs/WORKTREE_WORKFLOW.md)** - Git worktree workflow guide for OpenFrontIO
+- **[docs/SUBTREE.md](docs/SUBTREE.md)** - Git subtree management guide (legacy, for reference)
 
 ## Development Workflow
 
@@ -186,15 +209,19 @@ See [docs/ADDING_PACKAGES.md](docs/ADDING_PACKAGES.md) for a complete step-by-st
 
 Pull updates from upstream:
 ```bash
-git subtree pull --prefix=packages/OpenFrontIO openfrontio-upstream main --squash
+cd external/openfrontio
+git pull
 ```
 
 Push changes to your fork:
 ```bash
-git subtree push --prefix=packages/OpenFrontIO openfront-fork main
+cd external/openfrontio
+git push origin main
 ```
 
 Then create a PR from your fork to upstream on GitHub.
+
+See [docs/WORKTREE_WORKFLOW.md](docs/WORKTREE_WORKFLOW.md) for detailed workflow information.
 ```
 
 ## Technology Stack
