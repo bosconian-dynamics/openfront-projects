@@ -187,6 +187,14 @@ git ls-files -v | grep "^h.*package.json"
 
 If you see output starting with `h`, the file is ignored.
 
+### Untracked Rush Build Artifacts
+
+When you run `git status` in the worktree, you may see untracked directories:
+- `.rush/` - Rush build cache
+- `rush-logs/` - Rush build logs
+
+These are expected and can be safely ignored. They are Rush-specific files that don't exist in the upstream OpenFrontIO repository. Do not commit these to OpenFrontIO.
+
 ## Troubleshooting
 
 ### Worktree Directory Missing

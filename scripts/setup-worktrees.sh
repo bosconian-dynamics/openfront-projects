@@ -17,6 +17,12 @@ if [ ! -d "external/openfrontio" ]; then
   echo "Fetching from openfrontio remote..."
   git fetch openfrontio
   
+  # Remove the old local branch if it exists
+  if git show-ref --verify --quiet refs/heads/main; then
+    echo "Removing old local main branch..."
+    git branch -D main
+  fi
+  
   # Create the worktree
   git worktree add -b main external/openfrontio openfrontio/main
   

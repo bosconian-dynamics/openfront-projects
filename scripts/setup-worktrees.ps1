@@ -18,6 +18,12 @@ if (-not (Test-Path "external/openfrontio")) {
     Write-Host "Fetching from openfrontio remote..." -ForegroundColor Yellow
     git fetch openfrontio
     
+    # Remove the old local branch if it exists
+    if (git show-ref --verify --quiet refs/heads/main) {
+        Write-Host "Removing old local main branch..." -ForegroundColor Yellow
+        git branch -D main
+    }
+    
     # Create the worktree
     git worktree add -b main external/openfrontio openfrontio/main
     
