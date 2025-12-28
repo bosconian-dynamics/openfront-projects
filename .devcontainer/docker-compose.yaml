@@ -1,0 +1,56 @@
+services:
+  devcontainer:
+    image: mcr.microsoft.com/devcontainers/typescript-node:1-20-bookworm
+    container_name: openfront-devcontainer
+    volumes:
+      # Mount workspace root (one level up from .devcontainer/)
+      - ..:/workspaces/openfront-projects:cached
+      # Note: ~/.gitconfig mount removed - Codespaces manages git config automatically
+    command: sleep infinity
+    working_dir: /workspaces/openfront-projects
+    user: node
+    environment:
+      - NODE_ENV=development
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=openfront
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/openfront
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - openfront-network
+
+  postgres:
+    build:
+      # Build from ofp-data package Dockerfile
+      context: ../packages/data
+      dockerfile: Dockerfile
+    container_name: ofp-postgres
+    environment:
+      POSTGRES_DB: openfront
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - openfront-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  openfront-network:
+    driver: bridge
