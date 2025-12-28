@@ -6,7 +6,19 @@ echo "🔧 Setting up git worktrees for external dependencies..."
 # Setup OpenFrontIO worktree
 if [ ! -d "external/openfrontio" ]; then
   echo "📦 Setting up OpenFrontIO worktree..."
-  git worktree add external/openfrontio https://github.com/bosconian-dynamics/OpenFrontIO.git main
+  
+  # Add the remote if it doesn't exist
+  if ! git remote get-url openfrontio &> /dev/null; then
+    echo "Adding openfrontio remote..."
+    git remote add openfrontio https://github.com/bosconian-dynamics/OpenFrontIO.git
+  fi
+  
+  # Fetch the remote
+  echo "Fetching from openfrontio remote..."
+  git fetch openfrontio
+  
+  # Create the worktree
+  git worktree add -b main external/openfrontio openfrontio/main
   
   cd external/openfrontio
   

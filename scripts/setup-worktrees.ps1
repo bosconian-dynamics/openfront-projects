@@ -5,7 +5,21 @@ Write-Host "🔧 Setting up git worktrees for external dependencies..." -Foregro
 # Setup OpenFrontIO worktree
 if (-not (Test-Path "external/openfrontio")) {
     Write-Host "📦 Setting up OpenFrontIO worktree..." -ForegroundColor Yellow
-    git worktree add external/openfrontio https://github.com/bosconian-dynamics/OpenFrontIO.git main
+    
+    # Add the remote if it doesn't exist
+    try {
+        git remote get-url openfrontio 2>&1 | Out-Null
+    } catch {
+        Write-Host "Adding openfrontio remote..." -ForegroundColor Yellow
+        git remote add openfrontio https://github.com/bosconian-dynamics/OpenFrontIO.git
+    }
+    
+    # Fetch the remote
+    Write-Host "Fetching from openfrontio remote..." -ForegroundColor Yellow
+    git fetch openfrontio
+    
+    # Create the worktree
+    git worktree add -b main external/openfrontio openfrontio/main
     
     Push-Location external/openfrontio
     
