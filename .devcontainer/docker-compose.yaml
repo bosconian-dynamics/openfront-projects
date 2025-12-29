@@ -17,9 +17,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/openfront
-    depends_on:
-      postgres:
-        condition: service_healthy
     networks:
       - openfront-network
 
@@ -42,8 +39,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 10s
-    restart: unless-stopped
+      start_period: 30s
     networks:
       - openfront-network
 
