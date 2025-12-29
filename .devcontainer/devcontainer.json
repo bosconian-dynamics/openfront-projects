@@ -27,13 +27,19 @@
         "editor.codeActionsOnSave": {
           "source.fixAll.eslint": "explicit"
         },
-        "typescript.tsdk": "node_modules/typescript/lib",
+        "typescript.tsdk": "common/temp/node_modules/typescript/lib",
         "typescript.enablePromptUseWorkspaceTsdk": true
       }
     }
   },
 
-  "postCreateCommand": "npm install -g @microsoft/rush && rush update",
-  
-  "remoteUser": "node"
+  "onCreateCommand": "npm install -g @microsoft/rush",
+  "updateContentCommand": "rush update",
+  "postCreateCommand": "echo 'Rush monorepo setup complete. Note: Postgres service is starting in the background.'",
+
+  "remoteUser": "node",
+
+  "mounts": [
+    "source=${localWorkspaceFolder}/.git,target=/workspaces/${localWorkspaceFolderBasename}/.git,type=bind,consistency=cached"
+  ]
 }

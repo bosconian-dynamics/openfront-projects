@@ -33,7 +33,9 @@ The setup uses Docker Compose orchestration instead of a simple container image 
 - **Container Name**: `ofp-postgres`
 - **Port**: `5432` (exposed to host)
 - **Volume**: `postgres_data` for persistent storage
-- **Healthcheck**: Ensures database is ready before starting devcontainer
+- **Healthcheck**: Monitors database health (starts independently from devcontainer)
+
+**Note**: The postgres service starts independently without blocking the devcontainer startup. This ensures Codespaces and local Docker environments start reliably. Applications should handle waiting for postgres to be ready if needed.
 
 ## Usage
 
@@ -45,10 +47,11 @@ The setup uses Docker Compose orchestration instead of a simple container image 
 4. Wait for the containers to build and start
 
 The devcontainer will automatically:
-- Start the PostgreSQL database
-- Wait for the database to be healthy
+- Start the PostgreSQL database (in parallel, does not block startup)
 - Install Rush globally
 - Run `rush update` to install dependencies
+
+**Note**: The postgres service starts in the background and may take 10-30 seconds to become available. Check the healthcheck status if you need to ensure it's ready before connecting.
 
 ### Accessing the Database
 
