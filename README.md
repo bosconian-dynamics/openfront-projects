@@ -64,8 +64,6 @@ cd openfront-projects
 ./setup.ps1       # For Windows/PowerShell
 ```
 
-Note: The `setup.sh` and `setup.ps1` scripts will need to be updated to call the worktree setup script.
-
 ### Using VSCode Dev Container
 
 This repository includes a dev container configuration:
@@ -90,7 +88,6 @@ openfront-projects/
 ├── docs/                   # Documentation
 │   ├── ADDING_PACKAGES.md # How to add new packages
 │   ├── MONOREPO.md        # Monorepo structure and usage
-│   ├── SUBTREE.md         # Git subtree management guide (legacy)
 │   └── WORKTREE_WORKFLOW.md # Git worktree workflow guide
 ├── AGENTS.md               # Guidelines for AI coding agents
 ├── external/               # External packages (git worktrees)
@@ -178,7 +175,6 @@ rush remove -p <package-name>     # Remove a dependency
 - **[docs/MONOREPO.md](docs/MONOREPO.md)** - Detailed monorepo structure and usage guide
 - **[docs/ADDING_PACKAGES.md](docs/ADDING_PACKAGES.md)** - Step-by-step guide for adding new packages
 - **[docs/WORKTREE_WORKFLOW.md](docs/WORKTREE_WORKFLOW.md)** - Git worktree workflow guide for OpenFrontIO
-- **[docs/SUBTREE.md](docs/SUBTREE.md)** - Git subtree management guide (legacy, for reference)
 
 ## Development Workflow
 
