@@ -35,7 +35,7 @@
 
   "onCreateCommand": "npm install -g @microsoft/rush",
   "updateContentCommand": "rush update",
-  "postCreateCommand": "echo 'Rush monorepo setup complete'",
+  "postCreateCommand": "echo 'Rush monorepo setup complete. Note: Postgres service is starting in the background.'",
 
   "remoteUser": "node",
 
