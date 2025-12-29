@@ -20,7 +20,7 @@ openfront-projects/
 │   └── config/rush/        # Rush configuration files
 ├── docs/                   # Documentation
 ├── packages/               # All packages (2 levels deep)
-│   └── OpenFrontIO/        # OpenFrontIO subtree from upstream
+│   └── openfrontio/        # OpenFrontIO worktree
 └── rush.json               # Main Rush configuration
 ```
 
@@ -33,7 +33,7 @@ packages/
   └── [package-name]/      # Individual package directory
   
 external/
-  └── [package-name]/      # External package (subtree)
+  └── [package-name]/      # External package (worktree)
 ```
 
 **Structure:**
@@ -43,12 +43,12 @@ external/
 
 **Guidelines:**
 - Place new internal packages in `packages/[package-name]/`
-- External packages (git subtrees) go in `external/[package-name]/`
+- External packages (git worktrees) go in `external/[package-name]/`
 - Each package must have a `package.json` at its root
 - Package names should be descriptive and follow npm naming conventions
 
 **Current packages:**
-- `external/openfrontio` - Main OpenFrontIO game (git subtree, Rush-managed)
+- `external/openfrontio` - Main OpenFrontIO game (git worktree, Rush-managed)
   - Fork: https://github.com/bosconian-dynamics/OpenFrontIO (primary remote)
   - Upstream: https://github.com/openfrontio/OpenFrontIO (secondary remote)
   - Version tracked by git commit hash (currently: `28e22c9c`)
@@ -117,30 +117,36 @@ rushx <script-name>  # Run a package.json script
 
 4. Run `rush update` to register the package
 
-## OpenFrontIO Subtree
+## OpenFrontIO Worktree
 
-The `external/openfrontio` directory is maintained as a git subtree with a fork-based workflow:
-- **Fork (Primary)**: https://github.com/bosconian-dynamics/OpenFrontIO
+The `external/openfrontio` directory is maintained as a git worktree (separate repository):
+- **Repository**: https://github.com/bosconian-dynamics/OpenFrontIO
 - **Upstream**: https://github.com/openfrontio/OpenFrontIO
-- **Branch**: main
 
-### Subtree Commands
-
-Pull updates from upstream:
+### Setup (one-time)
 ```bash
-git subtree pull --prefix=external/openfrontio openfrontio-upstream main --squash
+./scripts/setup-worktrees.sh  # Linux/macOS
+# or
+.\scripts\setup-worktrees.ps1  # Windows
 ```
 
-Push changes to your fork:
+### Worktree Commands
+
+Pull updates:
 ```bash
-git subtree push --prefix=external/openfrontio openfrontio-fork main
+cd external/openfrontio
+git pull
 ```
 
-Remotes are already configured:
+Push changes:
 ```bash
-# View remotes
-git remote -v | grep openfront
+cd external/openfrontio
+git add .
+git commit -m "Your changes"
+git push origin main
 ```
+
+See `docs/WORKTREE_WORKFLOW.md` for detailed guide.
 
 ## Development Environment
 

@@ -47,23 +47,9 @@ if (-not $rushCommand) {
 }
 Write-Host ""
 
-# Configure git remotes for OpenFrontIO subtree
-Write-Host "🔧 Configuring git remotes for OpenFrontIO subtree..." -ForegroundColor Cyan
-try {
-    git remote get-url openfrontio-fork 2>&1 | Out-Null
-    Write-Host "✓ openfrontio-fork remote already configured" -ForegroundColor Green
-} catch {
-    git remote add openfrontio-fork https://github.com/bosconian-dynamics/OpenFrontIO
-    Write-Host "✓ Added openfrontio-fork remote" -ForegroundColor Green
-}
-
-try {
-    git remote get-url openfrontio-upstream 2>&1 | Out-Null
-    Write-Host "✓ openfrontio-upstream remote already configured" -ForegroundColor Green
-} catch {
-    git remote add openfrontio-upstream https://github.com/openfrontio/OpenFrontIO
-    Write-Host "✓ Added openfrontio-upstream remote" -ForegroundColor Green
-}
+# Setup git worktrees for external dependencies
+Write-Host "🔧 Setting up git worktrees..." -ForegroundColor Cyan
+& .\scripts\setup-worktrees.ps1
 Write-Host ""
 
 # Run rush update
@@ -80,17 +66,17 @@ Write-Host "  1. Build all packages:     rush build"
 Write-Host "  2. List all packages:      rush list"
 Write-Host "  3. Run tests:              rush test"
 Write-Host ""
-Write-Host "Subtree management:"
-Write-Host "  - Pull updates:            rush sync-subtree"
-Write-Host "  - Push to fork:            pwsh common/scripts/openfrontio-push.ps1"
+Write-Host "Working with OpenFrontIO:"
+Write-Host "  - Pull updates:            cd external/openfrontio && git pull"
+Write-Host "  - Push changes:            cd external/openfrontio && git push"
 Write-Host ""
 Write-Host "For VSCode users:"
 Write-Host "  - Install the 'Dev Containers' extension"
 Write-Host "  - Reopen this folder in container for a ready-to-go environment"
 Write-Host ""
 Write-Host "Documentation:"
-Write-Host "  - AGENTS.md               - AI coding agent guidelines"
-Write-Host "  - docs/MONOREPO.md        - Monorepo structure and usage"
-Write-Host "  - docs/ADDING_PACKAGES.md - How to add new packages"
-Write-Host "  - docs/SUBTREE.md         - Git subtree management"
+Write-Host "  - AGENTS.md                  - AI coding agent guidelines"
+Write-Host "  - docs/MONOREPO.md           - Monorepo structure and usage"
+Write-Host "  - docs/ADDING_PACKAGES.md    - How to add new packages"
+Write-Host "  - docs/WORKTREE_WORKFLOW.md  - Git worktree workflow"
 Write-Host ""
