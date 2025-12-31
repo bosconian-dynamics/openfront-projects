@@ -2,6 +2,10 @@
 
 Write-Host "🔧 Setting up git worktrees for external dependencies..." -ForegroundColor Cyan
 
+# Clean up any stale worktree registrations
+Write-Host "🧹 Cleaning up any stale worktree registrations..." -ForegroundColor Yellow
+git worktree prune
+
 # Setup OpenFrontIO worktree
 if (-not (Test-Path "external/openfrontio")) {
     Write-Host "📦 Setting up OpenFrontIO worktree..." -ForegroundColor Yellow
@@ -16,16 +20,10 @@ if (-not (Test-Path "external/openfrontio")) {
     
     # Fetch the remote
     Write-Host "Fetching from openfrontio remote..." -ForegroundColor Yellow
-    git fetch openfrontio
+    git fetch openfrontio main:refs/remotes/openfrontio/main
     
-    # Remove the old local branch if it exists
-    if (git show-ref --verify --quiet refs/heads/main) {
-        Write-Host "Removing old local main branch..." -ForegroundColor Yellow
-        git branch -D main
-    }
-    
-    # Create the worktree
-    git worktree add -b main external/openfrontio openfrontio/main
+    # Create the worktree tracking the remote branch directly
+    git worktree add external/openfrontio openfrontio/main
     
     Push-Location external/openfrontio
     

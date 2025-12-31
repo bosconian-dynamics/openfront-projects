@@ -49,6 +49,13 @@ rush build
 
 See [docs/WORKTREE_WORKFLOW.md](docs/WORKTREE_WORKFLOW.md) for detailed information about working with worktrees.
 
+**Quick tip:** When adding dependencies to external packages for upstream contributions, use:
+```bash
+rush toggle-compat          # Auto-toggle to opposite mode
+# ... make changes and commit ...
+rush toggle-compat          # Auto-toggle back
+```
+
 ### Alternative: Quick Setup Script
 
 **Quick Setup (Uses existing setup scripts):**

@@ -136,17 +136,145 @@ The `package.json` file in the worktree has local-only modifications that are re
 - `version: "0.0.0-external"` - Rush requires a version field
 - `scripts.build: "npm run build-prod"` - Rush expects a standard build script
 
-These modifications are marked as "assume-unchanged" so git ignores them.
+These modifications are automatically managed and marked as "assume-unchanged" so git ignores them.
 
-### If You Need to Modify package.json for Upstream
+### Adding Dependencies for Upstream Contributions
 
-If you need to make changes to `package.json` that should be committed to OpenFrontIO:
+The most common scenario is adding a new dependency that should be committed to OpenFrontIO. The **auto-toggle** feature makes this simple:
+
+#### Simple Auto-Toggle Workflow (Recommended)
+
+```bash
+# 1. Toggle to opposite mode (auto-detects current state)
+rush toggle-compat
+
+# 2. Add your dependency
+npm install some-new-package
+
+# 3. Commit the change
+git add package.json package-lock.json
+git commit -m "Add some-new-package dependency"
+git push origin main  # or your feature branch
+
+# 4. Toggle back (auto-detects and switches back)
+rush toggle-compat
+```
+
+#### Explicit Mode Control
+
+If you prefer explicit control or need to force a specific state:
+
+```bash
+# 1. Disable Rush compatibility (enables git tracking)
+rush toggle-compat --mode off
+
+# 2. Add your dependency
+npm install some-new-package
+
+# 3. Commit the change
+git add package.json package-lock.json
+git commit -m "Add some-new-package dependency"
+git push origin main  # or your feature branch
+
+# 4. Re-enable Rush compatibility
+rush toggle-compat --mode on
+```
+
+#### Using Scripts Directly
+
+```bash
+cd external/openfrontio
+
+# 1. Auto-toggle (detects current state and switches to opposite)
+../scripts/toggle-rush-compat.sh
+
+# 2. Make your changes
+npm install some-new-package
+git add package.json package-lock.json
+git commit -m "Add dependency"
+
+# 3. Auto-toggle back
+../scripts/toggle-rush-compat.sh
+```
+
+**Explicit mode control with scripts:**
+```bash
+# Bash (Linux/macOS)
+./scripts/toggle-rush-compat.sh off    # Force disable Rush compatibility
+./scripts/toggle-rush-compat.sh on     # Force enable Rush compatibility
+./scripts/toggle-rush-compat.sh auto   # Auto-detect and toggle (default)
+
+# PowerShell (Windows)
+.\scripts\toggle-rush-compat.ps1 -Mode off
+.\scripts\toggle-rush-compat.ps1 -Mode on
+.\scripts\toggle-rush-compat.ps1 -Mode auto  # Default if -Mode omitted
+```
+
+### Manual Process (Not Recommended)
+
+If you need to manage this manually for some reason:
 
 1. **Un-ignore the file:**
    ```bash
    cd external/openfrontio
    git update-index --no-assume-unchanged package.json
    ```
+
+2. **Revert local changes:**
+   ```bash
+   git checkout package.json
+   ```
+   This removes the local-only modifications (version and build script).
+
+3. **Make your upstream changes:**
+   Edit `package.json` with your changes (e.g., adding a dependency).
+
+4. **Commit and push:**
+   ```bash
+   git add package.json
+   git commit -m "Add new dependency"
+   git push origin main
+   ```
+
+5. **Re-add local modifications:**
+   After pushing, re-add the Rush-required fields:
+   ```bash
+   npm pkg set version="0.0.0-external"
+   npm pkg set scripts.build="npm run build-prod"
+   ```
+
+6. **Re-ignore the file:**
+   ```bash
+   git update-index --assume-unchanged package.json
+   ```
+
+### Available Toggle Scripts
+
+The repository includes cross-platform scripts for managing Rush compatibility:
+
+- **`scripts/toggle-rush-compat.sh`** - Bash script (Linux/macOS)
+- **`scripts/toggle-rush-compat.ps1`** - PowerShell script (Windows)
+
+**Script Usage:**
+```bash
+# Auto-toggle (detect current state and switch to opposite) - RECOMMENDED
+./scripts/toggle-rush-compat.sh
+./scripts/toggle-rush-compat.sh auto
+
+# Explicit mode control
+./scripts/toggle-rush-compat.sh [on|off] [optional-worktree-path]
+
+# PowerShell (Windows)
+.\scripts\toggle-rush-compat.ps1                    # Auto-toggle (default)
+.\scripts\toggle-rush-compat.ps1 -Mode [on|off|auto] [-WorktreePath path]
+
+# Via Rush (any platform) - RECOMMENDED
+rush toggle-compat                    # Auto-toggle (default)
+rush toggle-compat --mode [on|off|auto]
+```
+
+**How Auto-Detection Works:**
+The scripts detect the current mode by checking if `package.json` contains `"version": "0.0.0-external"`. If present, Rush compatibility is ON and will be toggled OFF. If absent, it's OFF and will be toggled ON.
 
 2. **Revert local changes:**
    ```bash
@@ -190,10 +318,16 @@ If you see output starting with `h`, the file is ignored.
 ### Untracked Rush Build Artifacts
 
 When you run `git status` in the worktree, you may see untracked directories:
-- `.rush/` - Rush build cache
+- `.rush/` - Rush build cache and temporary files
 - `rush-logs/` - Rush build logs
 
-These are expected and can be safely ignored. They are Rush-specific files that don't exist in the upstream OpenFrontIO repository. Do not commit these to OpenFrontIO.
+**These are expected and safe to ignore.** Here's why:
+
+1. **Never Committed**: These files only appear when Rush compatibility is ON (when `package.json` changes are ignored)
+2. **Upstream Safe**: When you toggle to OFF mode for upstream contributions, Rush recreates these as needed  
+3. **Standard Rush**: Every Rush project has these files, they're just not typically in git worktrees
+
+**Note**: These files cannot be added to `.gitignore` in the worktree because modifying upstream files would break compatibility. The toggle workflow ensures they never accidentally get committed.
 
 ## Troubleshooting
 
