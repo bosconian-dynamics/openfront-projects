@@ -1,9 +1,9 @@
 #!/usr/bin/env pwsh
 
 param(
-    [Parameter(Mandatory=$true)]
-    [ValidateSet("on", "off")]
-    [string]$Mode,
+    [Parameter(Mandatory=$false)]
+    [ValidateSet("on", "off", "auto")]
+    [string]$Mode = "auto",
     
     [Parameter(Mandatory=$false)]
     [string]$WorktreePath = "external/openfrontio"
@@ -17,6 +17,18 @@ if (-not (Test-Path $WorktreePath)) {
 Push-Location $WorktreePath
 
 try {
+    # Auto-detect current mode if not specified or if 'auto' is specified
+    if ($Mode -eq "auto") {
+        # Check if Rush compatibility is currently enabled by looking for the version field
+        $currentVersion = npm pkg get version 2>$null
+        if ($currentVersion -like '*0.0.0-external*') {
+            $Mode = "off"  # Currently on, so toggle off
+            Write-Host "📋 Auto-detected: Rush compatibility is ON, toggling OFF" -ForegroundColor Cyan
+        } else {
+            $Mode = "on"   # Currently off, so toggle on
+            Write-Host "📋 Auto-detected: Rush compatibility is OFF, toggling ON" -ForegroundColor Cyan
+        }
+    }
     if ($Mode -eq "off") {
         Write-Host "🔄 Disabling Rush compatibility - ready for upstream changes" -ForegroundColor Yellow
         

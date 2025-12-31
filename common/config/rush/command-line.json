@@ -13,14 +13,6 @@
   "commands": [
     {
       "commandKind": "global",
-      "name": "sync-subtree",
-      "summary": "Pull latest changes from OpenFrontIO upstream",
-      "description": "Synchronizes the OpenFrontIO subtree by pulling the latest changes from upstream and applying Rush compatibility modifications",
-      "safeForSimultaneousRushProcesses": false,
-      "shellCommand": "pwsh common/scripts/openfrontio-pull.ps1"
-    },
-    {
-      "commandKind": "global",
       "name": "clean",
       "summary": "Clean all build outputs and temporary files",
       "description": "Removes build outputs (dist/, lib/), Rush temporary files, and node_modules to reset the repository to a clean state",
@@ -33,7 +25,7 @@
       "summary": "Toggle Rush compatibility mode for external packages",
       "description": "Toggles Rush compatibility modifications on external package.json files to enable/disable git tracking for upstream contributions",
       "safeForSimultaneousRushProcesses": false,
-      "shellCommand": "node scripts/toggle-rush-compat.js"
+      "shellCommand": "pwsh scripts/toggle-rush-compat.ps1"
     }
     // {
     //   /**
@@ -218,7 +210,7 @@
       "parameterKind": "choice",
       "longName": "--mode",
       "shortName": "-m",
-      "description": "Mode to toggle Rush compatibility: 'on' to enable Rush compatibility (ignore git changes), 'off' to disable (track git changes for upstream contributions)",
+      "description": "Mode to toggle Rush compatibility: 'on' to enable Rush compatibility (ignore git changes), 'off' to disable (track git changes for upstream contributions), 'auto' to detect current state and toggle to opposite",
       "associatedCommands": ["toggle-compat"],
       "required": false,
       "alternatives": [
@@ -229,9 +221,13 @@
         {
           "name": "off",
           "description": "Disable Rush compatibility mode (package.json changes will be tracked by git for upstream contributions)"
+        },
+        {
+          "name": "auto",
+          "description": "Auto-detect current state and toggle to the opposite mode"
         }
       ],
-      "defaultValue": "off"
+      "defaultValue": "auto"
     }
     // {
     //   /**

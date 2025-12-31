@@ -70,7 +70,8 @@ rush add -p <dependency-name>
 rush remove -p <dependency-name>
 
 # Toggle Rush compatibility for external packages
-rush toggle-compat --mode [on|off]  # Default: off
+rush toggle-compat                   # Auto-toggle (recommended)
+rush toggle-compat --mode [on|off|auto]  # Explicit mode
 ```
 
 ### Package-Specific Commands
@@ -189,6 +190,25 @@ git push origin main
 
 When adding dependencies to `external/openfrontio` for upstream contributions:
 
+**Simple Auto-Toggle Workflow (Recommended):**
+```bash
+# 1. Auto-toggle to enable git tracking
+rush toggle-compat
+
+# 2. Add dependency in the worktree
+cd external/openfrontio
+npm install new-package
+
+# 3. Commit and push
+git add package.json package-lock.json
+git commit -m "Add new-package dependency"
+git push origin feature-branch
+
+# 4. Auto-toggle back to Rush compatibility
+rush toggle-compat
+```
+
+**Explicit Mode Control:**
 ```bash
 # 1. Disable Rush compatibility (enables git tracking)
 rush toggle-compat --mode off
@@ -209,7 +229,11 @@ rush toggle-compat --mode on
 **Alternative script usage:**
 ```bash
 # Direct script usage (from repo root)
-./scripts/toggle-rush-compat.sh off  # Linux/macOS
+./scripts/toggle-rush-compat.sh        # Auto-toggle (Linux/macOS)
+.\scripts\toggle-rush-compat.ps1       # Auto-toggle (Windows)
+
+# Explicit modes
+./scripts/toggle-rush-compat.sh off    # Linux/macOS
 .\scripts\toggle-rush-compat.ps1 -Mode off  # Windows
 ```
 
