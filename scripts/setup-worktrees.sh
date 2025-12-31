@@ -3,6 +3,10 @@ set -e
 
 echo "🔧 Setting up git worktrees for external dependencies..."
 
+# Clean up any stale worktree registrations
+echo "🧹 Cleaning up any stale worktree registrations..."
+git worktree prune
+
 # Setup OpenFrontIO worktree
 if [ ! -d "external/openfrontio" ]; then
   echo "📦 Setting up OpenFrontIO worktree..."
@@ -15,16 +19,10 @@ if [ ! -d "external/openfrontio" ]; then
   
   # Fetch the remote
   echo "Fetching from openfrontio remote..."
-  git fetch openfrontio
+  git fetch openfrontio main:refs/remotes/openfrontio/main
   
-  # Remove the old local branch if it exists
-  if git show-ref --verify --quiet refs/heads/main; then
-    echo "Removing old local main branch..."
-    git branch -D main
-  fi
-  
-  # Create the worktree
-  git worktree add -b main external/openfrontio openfrontio/main
+  # Create the worktree tracking the remote branch directly
+  git worktree add external/openfrontio openfrontio/main
   
   cd external/openfrontio
   

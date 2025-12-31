@@ -136,17 +136,104 @@ The `package.json` file in the worktree has local-only modifications that are re
 - `version: "0.0.0-external"` - Rush requires a version field
 - `scripts.build: "npm run build-prod"` - Rush expects a standard build script
 
-These modifications are marked as "assume-unchanged" so git ignores them.
+These modifications are automatically managed and marked as "assume-unchanged" so git ignores them.
 
-### If You Need to Modify package.json for Upstream
+### Adding Dependencies for Upstream Contributions
 
-If you need to make changes to `package.json` that should be committed to OpenFrontIO:
+The most common scenario is adding a new dependency that should be committed to OpenFrontIO. Use the **toggle compatibility mode** to manage this:
+
+#### Option 1: Using Rush Command (Recommended)
+
+```bash
+# 1. Disable Rush compatibility (enables git tracking)
+rush toggle-compat --mode off
+
+# 2. Add your dependency
+npm install some-new-package
+
+# 3. Commit the change
+git add package.json package-lock.json
+git commit -m "Add some-new-package dependency"
+git push origin main  # or your feature branch
+
+# 4. Re-enable Rush compatibility
+rush toggle-compat --mode on
+```
+
+#### Option 2: Using Scripts Directly
+
+```bash
+cd external/openfrontio
+
+# 1. Toggle off Rush compatibility
+../scripts/toggle-rush-compat.sh off
+
+# 2. Make your changes
+npm install some-new-package
+git add package.json package-lock.json
+git commit -m "Add dependency"
+
+# 3. Toggle Rush compatibility back on
+../scripts/toggle-rush-compat.sh on
+```
+
+### Manual Process (Not Recommended)
+
+If you need to manage this manually for some reason:
 
 1. **Un-ignore the file:**
    ```bash
    cd external/openfrontio
    git update-index --no-assume-unchanged package.json
    ```
+
+2. **Revert local changes:**
+   ```bash
+   git checkout package.json
+   ```
+   This removes the local-only modifications (version and build script).
+
+3. **Make your upstream changes:**
+   Edit `package.json` with your changes (e.g., adding a dependency).
+
+4. **Commit and push:**
+   ```bash
+   git add package.json
+   git commit -m "Add new dependency"
+   git push origin main
+   ```
+
+5. **Re-add local modifications:**
+   After pushing, re-add the Rush-required fields:
+   ```bash
+   npm pkg set version="0.0.0-external"
+   npm pkg set scripts.build="npm run build-prod"
+   ```
+
+6. **Re-ignore the file:**
+   ```bash
+   git update-index --assume-unchanged package.json
+   ```
+
+### Available Toggle Scripts
+
+The repository includes cross-platform scripts for managing Rush compatibility:
+
+- **`scripts/toggle-rush-compat.sh`** - Bash script (Linux/macOS)
+- **`scripts/toggle-rush-compat.ps1`** - PowerShell script (Windows)
+- **`scripts/toggle-rush-compat.js`** - Node.js wrapper (used by Rush)
+
+**Script Usage:**
+```bash
+# Bash (Linux/macOS)
+./scripts/toggle-rush-compat.sh [on|off] [optional-worktree-path]
+
+# PowerShell (Windows)
+.\scripts\toggle-rush-compat.ps1 -Mode [on|off] [-WorktreePath path]
+
+# Via Rush (any platform)
+rush toggle-compat --mode [on|off]
+```
 
 2. **Revert local changes:**
    ```bash

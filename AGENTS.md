@@ -68,6 +68,9 @@ rush add -p <dependency-name>
 
 # Remove dependency
 rush remove -p <dependency-name>
+
+# Toggle Rush compatibility for external packages
+rush toggle-compat --mode [on|off]  # Default: off
 ```
 
 ### Package-Specific Commands
@@ -180,6 +183,34 @@ cd external/openfrontio
 git add .
 git commit -m "Your changes"
 git push origin main
+```
+
+### Managing External Package Dependencies
+
+When adding dependencies to `external/openfrontio` for upstream contributions:
+
+```bash
+# 1. Disable Rush compatibility (enables git tracking)
+rush toggle-compat --mode off
+
+# 2. Add dependency in the worktree
+cd external/openfrontio
+npm install new-package
+
+# 3. Commit and push
+git add package.json package-lock.json
+git commit -m "Add new-package dependency"
+git push origin feature-branch
+
+# 4. Re-enable Rush compatibility
+rush toggle-compat --mode on
+```
+
+**Alternative script usage:**
+```bash
+# Direct script usage (from repo root)
+./scripts/toggle-rush-compat.sh off  # Linux/macOS
+.\scripts\toggle-rush-compat.ps1 -Mode off  # Windows
 ```
 
 See `docs/WORKTREE_WORKFLOW.md` for detailed guide.

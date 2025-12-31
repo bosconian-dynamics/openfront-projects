@@ -26,6 +26,14 @@
       "description": "Removes build outputs (dist/, lib/), Rush temporary files, and node_modules to reset the repository to a clean state",
       "safeForSimultaneousRushProcesses": false,
       "shellCommand": "rush purge && git clean -fdX"
+    },
+    {
+      "commandKind": "global",
+      "name": "toggle-compat",
+      "summary": "Toggle Rush compatibility mode for external packages",
+      "description": "Toggles Rush compatibility modifications on external package.json files to enable/disable git tracking for upstream contributions",
+      "safeForSimultaneousRushProcesses": false,
+      "shellCommand": "node scripts/toggle-rush-compat.js"
     }
     // {
     //   /**
@@ -206,6 +214,25 @@
    * For example, you might define a "--production" parameter for the "rush build" command.
    */
   "parameters": [
+    {
+      "parameterKind": "choice",
+      "longName": "--mode",
+      "shortName": "-m",
+      "description": "Mode to toggle Rush compatibility: 'on' to enable Rush compatibility (ignore git changes), 'off' to disable (track git changes for upstream contributions)",
+      "associatedCommands": ["toggle-compat"],
+      "required": false,
+      "alternatives": [
+        {
+          "name": "on",
+          "description": "Enable Rush compatibility mode (package.json changes will be ignored by git)"
+        },
+        {
+          "name": "off",
+          "description": "Disable Rush compatibility mode (package.json changes will be tracked by git for upstream contributions)"
+        }
+      ],
+      "defaultValue": "off"
+    }
     // {
     //   /**
     //    * (Required) Determines the type of custom parameter.
