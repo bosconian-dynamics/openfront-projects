@@ -1,6 +1,18 @@
-# GitHub Issues to Create
+# DEPRECATED: Issues to Create
 
-Based on the PR review, the following issues should be created for further investigation and implementation. These items require more detailed discussion before implementation.
+**Note: This file has been deprecated.** 
+
+The issues listed here were related to the old git subtree/worktree workflow that has been replaced with git submodules.
+
+The git submodule approach resolves the complexity and workflow issues that these issues were intended to address:
+
+- ✅ **Subtree complexity**: Resolved by switching to submodules
+- ✅ **Version pinning**: Now handled natively by submodules  
+- ✅ **Simplified workflow**: Standard git submodule commands
+- ✅ **No branch conflicts**: Separate repositories with submodules
+- ✅ **Clean history**: No complex merge/push operations needed
+
+See [docs/SUBMODULE_WORKFLOW.md](docs/SUBMODULE_WORKFLOW.md) for the current workflow.
 
 ## Issue 1: Improve git subtree push complexity with worktree approach
 

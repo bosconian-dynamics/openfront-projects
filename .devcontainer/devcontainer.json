@@ -34,7 +34,7 @@
   },
 
   "onCreateCommand": "npm install -g @microsoft/rush",
-  "postCreateCommand": "bash -c 'scripts/setup-worktrees.sh && rush update && echo \"Rush monorepo setup complete. Note: Postgres service is starting in the background.\"'",
+  "postCreateCommand": "bash -c 'scripts/setup-submodules.sh && rush update && echo \"Rush monorepo setup complete. Note: Postgres service is starting in the background.\"'",
 
   "remoteUser": "node",
 

@@ -123,5 +123,5 @@ dist-storybook/
 .cache/
 .heft/
 
-# Git worktrees (separate repositories, not tracked in monorepo)
-external/openfrontio/
+# Git submodules (tracked in monorepo)
+# external/openfrontio/ - now tracked as submodule

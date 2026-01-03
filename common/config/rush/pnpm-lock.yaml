@@ -101,7 +101,7 @@ importers:
         specifier: ^16.5.0
         version: 16.6.1
       express:
-        specifier: ^4.21.1
+        specifier: ^4.22.1
         version: 4.22.1
       express-rate-limit:
         specifier: ^7.5.0

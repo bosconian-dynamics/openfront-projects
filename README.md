@@ -6,7 +6,7 @@ A Rush-based monorepo for managing OpenFront-related projects and packages.
 
 This repository uses [Microsoft Rush](https://rushjs.io/) to manage multiple packages in a scalable, efficient monorepo structure. It includes:
 
-- **OpenFrontIO**: The main OpenFrontIO game (maintained as a git subtree)
+- **OpenFrontIO**: The main OpenFrontIO game (maintained as a git submodule)
 - **Consistent Tooling**: Unified build, test, and lint configurations
 - **Efficient Builds**: Parallel builds with intelligent caching
 - **Dev Container**: Pre-configured VSCode development environment
@@ -21,7 +21,7 @@ This repository uses [Microsoft Rush](https://rushjs.io/) to manage multiple pac
 
 ### 🚀 First-Time Setup
 
-This monorepo uses git worktrees for external dependencies. Before running Rush commands, you need to set up the worktrees:
+This monorepo uses git submodules for external dependencies. Before running Rush commands, you need to set up the submodules:
 
 **Linux/macOS:**
 ```bash
@@ -30,7 +30,7 @@ git clone https://github.com/bosconian-dynamics/openfront-projects.git
 cd openfront-projects
 
 # Run the setup script
-./scripts/setup-worktrees.sh
+./scripts/setup-submodules.sh
 rush update
 rush build
 ```
@@ -42,12 +42,12 @@ git clone https://github.com/bosconian-dynamics/openfront-projects.git
 cd openfront-projects
 
 # Run the setup script
-.\scripts\setup-worktrees.ps1
+.\scripts\setup-submodules.ps1
 rush update
 rush build
 ```
 
-See [docs/WORKTREE_WORKFLOW.md](docs/WORKTREE_WORKFLOW.md) for detailed information about working with worktrees.
+See [docs/SUBMODULE_WORKFLOW.md](docs/SUBMODULE_WORKFLOW.md) for detailed information about working with submodules.
 
 **Quick tip:** When adding dependencies to external packages for upstream contributions, use:
 ```bash
@@ -95,15 +95,15 @@ openfront-projects/
 ├── docs/                   # Documentation
 │   ├── ADDING_PACKAGES.md # How to add new packages
 │   ├── MONOREPO.md        # Monorepo structure and usage
-│   └── WORKTREE_WORKFLOW.md # Git worktree workflow guide
+│   └── SUBMODULE_WORKFLOW.md # Git submodule workflow guide
 ├── AGENTS.md               # Guidelines for AI coding agents
-├── external/               # External packages (git worktrees)
-│   └── openfrontio/        # OpenFrontIO worktree (setup required)
+├── external/               # External packages (git submodules)
+│   └── openfrontio/        # OpenFrontIO submodule
 ├── packages/               # Internal packages (one level deep)
 │   └── [package-name]/     # Individual package directories
 ├── scripts/                # Monorepo setup scripts
-│   ├── setup-worktrees.sh  # Setup worktrees (Linux/macOS)
-│   └── setup-worktrees.ps1 # Setup worktrees (Windows)
+  ├── setup-submodules.sh  # Setup submodules (Linux/macOS)
+  └── setup-submodules.ps1 # Setup submodules (Windows)
 └── rush.json               # Main Rush configuration
 ```
 
@@ -118,21 +118,21 @@ packages/
   └── [package-name]/      # Individual package directory
   
 external/
-  └── [package-name]/      # External package (worktree)
+  └── [package-name]/      # External package (submodule)
 ```
 
 **Structure:**
 - Package directories are always one level deep from their category
 - Category directories (`packages/`, `external/`) exist at repo root
 - Example: `packages/my-app/`, `external/openfrontio/`
-- External packages use git worktrees (not tracked in monorepo)
+- External packages use git submodules (tracked commits in monorepo)
 
-### Git Worktree for OpenFrontIO
+### Git Submodule for OpenFrontIO
 
-The `external/openfrontio` directory is maintained as a git worktree:
+The `external/openfrontio` directory is maintained as a git submodule:
 - **Repository**: [bosconian-dynamics/OpenFrontIO](https://github.com/bosconian-dynamics/OpenFrontIO)
 - **Upstream**: [openfrontio/OpenFrontIO](https://github.com/openfrontio/OpenFrontIO)
-- **Setup Required**: Run `./scripts/setup-worktrees.sh` after cloning
+- **Setup Required**: Run `./scripts/setup-submodules.sh` after cloning
 
 This allows:
 
@@ -141,9 +141,10 @@ This allows:
 - Pushing changes to your fork
 - Submitting PRs to upstream
 - Pulling updates from upstream
-- Clean separation (worktree not tracked in monorepo)
+- Version pinning and dependency tracking
+- Clean separation (submodule tracked in monorepo)
 
-See [docs/WORKTREE_WORKFLOW.md](docs/WORKTREE_WORKFLOW.md) for details.
+See [docs/SUBMODULE_WORKFLOW.md](docs/SUBMODULE_WORKFLOW.md) for details.
 
 ### Package Manager
 
@@ -181,7 +182,7 @@ rush remove -p <package-name>     # Remove a dependency
 - **[AGENTS.md](AGENTS.md)** - Guidelines for AI coding agents working with this codebase
 - **[docs/MONOREPO.md](docs/MONOREPO.md)** - Detailed monorepo structure and usage guide
 - **[docs/ADDING_PACKAGES.md](docs/ADDING_PACKAGES.md)** - Step-by-step guide for adding new packages
-- **[docs/WORKTREE_WORKFLOW.md](docs/WORKTREE_WORKFLOW.md)** - Git worktree workflow guide for OpenFrontIO
+- **[docs/SUBMODULE_WORKFLOW.md](docs/SUBMODULE_WORKFLOW.md)** - Git submodule workflow guide for OpenFrontIO
 
 ## Development Workflow
 
@@ -224,7 +225,7 @@ git push origin main
 
 Then create a PR from your fork to upstream on GitHub.
 
-See [docs/WORKTREE_WORKFLOW.md](docs/WORKTREE_WORKFLOW.md) for detailed workflow information.
+See [docs/SUBMODULE_WORKFLOW.md](docs/SUBMODULE_WORKFLOW.md) for detailed workflow information.
 ```
 
 ## Technology Stack

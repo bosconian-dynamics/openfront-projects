@@ -19,25 +19,26 @@ This document summarizes the Rush monorepo setup completed on December 25, 2024.
 - `.gitignore` - Properly configured for Rush
 - `.gitattributes` - Git attributes for Rush
 
-### ✅ 2. OpenFrontIO Git Subtree
+### ✅ 2. OpenFrontIO Git Submodule
 
 **Implementation:**
-- Fork remote: `git remote add openfront-fork https://github.com/bosconian-dynamics/OpenFrontIO`
-- Upstream remote: `git remote add openfrontio-upstream https://github.com/openfrontio/OpenFrontIO`
-- Created subtree at: `external/openfrontio`
-- Version tracked by git commit hash: `28e22c9c`
-- **Not** registered in rush.json to preserve upstream state without modifications
+- Submodule URL: `https://github.com/bosconian-dynamics/OpenFrontIO.git`
+- Submodule path: `external/openfrontio`
+- Upstream remote (configured in submodule): `https://github.com/openfrontio/OpenFrontIO.git`
+- Version pinned by submodule commit reference
+- Rush compatibility handled by toggle scripts
 - OpenFrontIO manages its own dependencies independently
 
-**Fork-Based Workflow:**
+**Submodule Workflow:**
 ```bash
-# Pull updates from upstream
-git subtree pull --prefix=external/openfrontio openfrontio-upstream main --squash
+# Pull updates from upstream (in submodule)
+cd external/openfrontio && git pull origin main && cd ../.. && git add external/openfrontio
 
-# Push changes to fork
-git subtree push --prefix=external/openfrontio openfront-fork main
+# Push changes to fork (in submodule) 
+cd external/openfrontio && git push origin feature-branch
 
-# Then create PR from fork to upstream on GitHub
+# Pin new version in monorepo
+git add external/openfrontio && git commit -m "Update OpenFrontIO to new version"
 ```
 
 ### ✅ 3. VSCode Dev Container
@@ -78,8 +79,8 @@ git subtree push --prefix=external/openfrontio openfront-fork main
    - Package categories and naming
    - Best practices
 
-5. **docs/SUBTREE.md**
-   - Git subtree concepts
+5. **docs/SUBMODULE_WORKFLOW.md**
+   - Git submodule concepts
    - Management commands
    - Development workflow
    - Troubleshooting
@@ -128,7 +129,7 @@ openfront-projects/
 ├── docs/
 │   ├── ADDING_PACKAGES.md     # Package creation guide
 │   ├── MONOREPO.md            # Monorepo structure guide
-│   └── SUBTREE.md             # Git subtree management
+│   └── SUBMODULE_WORKFLOW.md    # Git submodule management
 ├── AGENTS.md                  # AI coding agent guidelines
 ├── packages/
 │   └── OpenFrontIO/           # OpenFrontIO git subtree
@@ -163,7 +164,7 @@ openfront-projects/
    - Located at: `external/openfrontio`
    - Pull updates: `git subtree pull --prefix=external/openfrontio openfrontio-upstream main --squash`
    - Push to fork: `git subtree push --prefix=external/openfrontio openfront-fork main`
-   - Contribute back: Follow `docs/SUBTREE.md`
+   - Contribute back: Follow `docs/SUBMODULE_WORKFLOW.md`
 
 5. **Use Dev Container (Optional):**
    - Open in VSCode

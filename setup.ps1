@@ -47,9 +47,9 @@ if (-not $rushCommand) {
 }
 Write-Host ""
 
-# Setup git worktrees for external dependencies
-Write-Host "🔧 Setting up git worktrees..." -ForegroundColor Cyan
-& .\scripts\setup-worktrees.ps1
+# Setup git submodules for external dependencies
+Write-Host "🔧 Setting up git submodules..." -ForegroundColor Cyan
+& .\scripts\setup-submodules.ps1
 Write-Host ""
 
 # Run rush update

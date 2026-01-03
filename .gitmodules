@@ -1,0 +1,3 @@
+[submodule "external/openfrontio"]
+	path = external/openfrontio
+	url = https://github.com/bosconian-dynamics/OpenFrontIO.git

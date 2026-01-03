@@ -24,7 +24,7 @@ openfront-projects/
 ├── docs/                   # Documentation
 │   ├── MONOREPO.md         # Monorepo structure guide
 │   ├── ADDING_PACKAGES.md  # Package creation guide
-│   └── SUBTREE.md          # Git subtree management
+│   └── SUBMODULE_WORKFLOW.md   # Git submodule management
 ├── AGENTS.md               # Instructions for AI coding agents
 ├── external/               # External packages (git subtrees)
 │   └── openfrontio/        # OpenFrontIO game (git subtree)
@@ -219,7 +219,7 @@ Then create a PR from the fork to upstream on GitHub.
 
 **Important**: Do NOT modify the git subtree workflow or remotes without explicit instructions.
 
-See `docs/SUBTREE.md` for comprehensive subtree management guide.
+See `docs/SUBMODULE_WORKFLOW.md` for comprehensive submodule management guide.
 
 ## Troubleshooting
 
@@ -280,7 +280,7 @@ See `docs/SUBTREE.md` for comprehensive subtree management guide.
 - **AI Agent Guidelines**: See `AGENTS.md` in the repository root for comprehensive guidelines
 - **Monorepo Structure**: See `docs/MONOREPO.md` for detailed structure documentation
 - **Package Management**: See `docs/ADDING_PACKAGES.md` for package creation guide
-- **Subtree Workflow**: See `docs/SUBTREE.md` for git subtree management
+- **Submodule Workflow**: See `docs/SUBMODULE_WORKFLOW.md` for git submodule management
 
 ## Important Notes
 

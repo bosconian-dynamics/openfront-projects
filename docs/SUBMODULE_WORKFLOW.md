@@ -1,53 +1,264 @@
-# Git Worktree Workflow Guide
+# Git Submodule Workflow Guide
 
-This document explains how to work with the OpenFrontIO git worktree in this repository.
+This document explains how to work with the OpenFrontIO git submodule in this repository.
 
-## What is a Git Worktree?
+## What is a Git Submodule?
 
-A git worktree allows you to have multiple working trees attached to the same repository. In our case, `external/openfrontio` is a separate git repository (worktree) that is not tracked in the main monorepo, but can have local modifications that are never committed.
+A git submodule allows you to include one repository inside another repository at a specific commit. In our case, `external/openfrontio` is the OpenFrontIO repository embedded as a submodule, allowing us to pin specific versions and track dependencies.
 
-## OpenFrontIO Worktree
+## OpenFrontIO Submodule
 
-The OpenFrontIO project is integrated as a git worktree:
+The OpenFrontIO project is integrated as a git submodule:
 
 - **Repository**: https://github.com/bosconian-dynamics/OpenFrontIO
-- **Upstream**: https://github.com/openfrontio/OpenFrontIO
-- **Worktree Path**: `external/openfrontio`
-- **Branch**: `main` (default)
+- **Upstream**: https://github.com/openfrontio/OpenFrontIO  
+- **Submodule Path**: `external/openfrontio`
+- **Default Branch**: `main`
 
 This setup allows you to:
-- Work on OpenFrontIO within the monorepo
-- Make local-only modifications for Rush compatibility (never committed)
+- Pin specific versions of OpenFrontIO in the monorepo
+- Work on OpenFrontIO within the monorepo context
+- Make local-only modifications for Rush compatibility
 - Push changes to your fork
 - Open PRs to upstream
 - Pull updates from upstream
-- Keep the monorepo clean (worktree not tracked in monorepo git)
+- Track which version of OpenFrontIO each monorepo commit uses
 
 ## Initial Setup
 
 ### For New Developers
 
-After cloning the monorepo, you need to set up the worktree:
+After cloning the monorepo, you need to initialize the submodules:
 
-**Linux/macOS:**
+**Clone with submodules:**
 ```bash
-./scripts/setup-worktrees.sh
+git clone --recurse-submodules https://github.com/bosconian-dynamics/openfront-projects.git
+cd openfront-projects
 rush update
 rush build
 ```
 
-**Windows (PowerShell):**
-```powershell
-.\scripts\setup-worktrees.ps1
+**Or initialize submodules after cloning:**
+```bash
+git clone https://github.com/bosconian-dynamics/openfront-projects.git
+cd openfront-projects
+./scripts/setup-submodules.sh  # Linux/macOS
+# or
+.\scripts\setup-submodules.ps1  # Windows (PowerShell)
 rush update
 rush build
 ```
 
 The setup script will:
-1. Create the worktree at `external/openfrontio`
-2. Clone the OpenFrontIO repository
+1. Initialize and update all submodules
+2. Configure Rush compatibility for OpenFrontIO
 3. Add local-only modifications to `package.json` (version and build script)
 4. Mark `package.json` to ignore local changes
+
+## Daily Workflow
+
+### Working on OpenFrontIO
+
+```bash
+# Navigate to the submodule
+cd external/openfrontio
+
+# Create a feature branch
+git checkout -b feature/my-feature
+
+# Make your changes
+# ... edit files ...
+
+# Build and test
+rushx build
+rushx test
+rushx lint
+
+# Commit your changes
+git add .
+git commit -m "Add my feature"
+
+# Push to your fork
+git push origin feature/my-feature
+
+# Go back to monorepo root
+cd ../..
+```
+
+### Updating OpenFrontIO Version
+
+**Update to latest version:**
+```bash
+cd external/openfrontio
+git checkout main
+git pull origin main
+cd ../..
+
+# Pin the new version in the monorepo
+git add external/openfrontio
+git commit -m "Update OpenFrontIO to latest version"
+```
+
+**Update to specific version/tag:**
+```bash
+cd external/openfrontio
+git checkout v1.2.3  # or specific commit hash
+cd ../..
+
+# Pin the specific version
+git add external/openfrontio
+git commit -m "Update OpenFrontIO to v1.2.3"
+```
+
+**Pull updates from upstream:**
+```bash
+cd external/openfrontio
+git remote add upstream https://github.com/openfrontio/OpenFrontIO.git  # first time only
+git fetch upstream
+git merge upstream/main  # or rebase
+git push origin main  # push to your fork
+cd ../..
+
+# Pin the updated version
+git add external/openfrontio
+git commit -m "Update OpenFrontIO with upstream changes"
+```
+
+## Rush Compatibility
+
+OpenFrontIO requires local modifications to work with Rush. These are managed by the toggle scripts:
+
+**Enable Rush compatibility:**
+```bash
+./scripts/toggle-rush-compat.sh on external/openfrontio
+```
+
+**Disable Rush compatibility (for upstream contributions):**
+```bash
+./scripts/toggle-rush-compat.sh off external/openfrontio
+```
+
+**Auto-toggle (detects current state):**
+```bash
+./scripts/toggle-rush-compat.sh auto external/openfrontio
+```
+
+## Contributing to OpenFrontIO Upstream
+
+When contributing changes back to the original OpenFrontIO repository:
+
+1. **Disable Rush compatibility:**
+   ```bash
+   ./scripts/toggle-rush-compat.sh off external/openfrontio
+   ```
+
+2. **Make your changes and commit:**
+   ```bash
+   cd external/openfrontio
+   git checkout -b feature/upstream-contribution
+   # ... make changes ...
+   git add .
+   git commit -m "Your contribution"
+   ```
+
+3. **Push to your fork:**
+   ```bash
+   git push origin feature/upstream-contribution
+   ```
+
+4. **Create PR on GitHub** to `openfrontio/OpenFrontIO`
+
+5. **Re-enable Rush compatibility:**
+   ```bash
+   cd ../..
+   ./scripts/toggle-rush-compat.sh on external/openfrontio
+   ```
+
+## Common Tasks
+
+### Check submodule status
+```bash
+git submodule status
+```
+
+### Update all submodules
+```bash
+git submodule update --remote
+```
+
+### Reset submodule to committed version
+```bash
+git submodule update --init --recursive
+```
+
+### See which version is currently pinned
+```bash
+cd external/openfrontio
+git log --oneline -1
+cd ../..
+```
+
+### View submodule changes since last commit
+```bash
+git diff external/openfrontio
+```
+
+## Troubleshooting
+
+### Submodule appears dirty after setup
+This is normal - the local Rush modifications make the submodule appear "dirty":
+```bash
+cd external/openfrontio
+git status  # Will show modified package.json
+cd ../..
+```
+The `package.json` changes are ignored and won't be committed.
+
+### Submodule not initialized
+```bash
+git submodule update --init --recursive
+```
+
+### Submodule pointing to wrong commit
+```bash
+git submodule update  # Reset to committed version
+# or
+cd external/openfrontio
+git checkout main     # Switch to main branch
+cd ../..
+git add external/openfrontio  # Pin new version
+git commit -m "Update submodule version"
+```
+
+### Cannot push because of dirty submodule
+Make sure Rush compatibility is properly configured:
+```bash
+./scripts/toggle-rush-compat.sh on external/openfrontio
+```
+
+## Best Practices
+
+1. **Always commit submodule updates** - When updating OpenFrontIO, commit the change to track the version
+2. **Use descriptive commit messages** - Include version numbers or key changes
+3. **Test after updates** - Run `rush build` and `rush test` after updating the submodule
+4. **Keep Rush compatibility on** - Only disable it temporarily for upstream contributions
+5. **Pin stable versions** - Prefer tagged releases over commit hashes when possible
+
+## Migration from Worktrees
+
+If you're migrating from the old worktree setup:
+
+1. **Remove old worktree:**
+   ```bash
+   git worktree remove external/openfrontio --force
+   ```
+
+2. **Setup new submodule:**
+   ```bash
+   ./scripts/setup-submodules.sh
+   ```
+
+3. **Update your workflow** - Use submodule commands instead of worktree commands
 
 ## Daily Operations
 

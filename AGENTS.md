@@ -4,7 +4,7 @@ Instructions for AI coding agents working with this codebase.
 
 ## Project Overview
 
-This is a **Rush monorepo** for OpenFront-related projects. The primary package is OpenFrontIO, a multiplayer strategy game maintained as a git worktree.
+This is a **Rush monorepo** for OpenFront-related projects. The primary package is OpenFrontIO, a multiplayer strategy game maintained as a git submodule.
 
 **Stack:**
 - Build System: Rush 5.164.0
@@ -108,8 +108,8 @@ openfront-projects/
 ├── apps/              # Application packages
 ├── packages/          # Internal library packages
 ├── experiments/       # Experimental packages
-├── external/          # External packages (git worktrees)
-│   └── openfrontio/   # OpenFrontIO game (git worktree)
+├── external/          # External packages (git submodules)
+│   └── openfrontio/   # OpenFrontIO game (git submodule)
 ├── common/            # Rush shared configuration
 │   ├── config/rush/   # Rush config files
 │   └── scripts/       # Monorepo automation scripts
@@ -159,17 +159,17 @@ openfront-projects/
 
 See `docs/ADDING_PACKAGES.md` for detailed guide.
 
-## Git Worktree Management
+## Git Submodule Management
 
-OpenFrontIO at `external/openfrontio` is a git worktree (separate repository):
+OpenFrontIO at `external/openfrontio` is a git submodule (separate repository):
 - **Repository:** https://github.com/bosconian-dynamics/OpenFrontIO
 - **Upstream:** https://github.com/openfrontio/OpenFrontIO
 
 ### Setup (one-time)
 ```bash
-./scripts/setup-worktrees.sh  # Linux/macOS
+./scripts/setup-submodules.sh  # Linux/macOS
 # or
-.\scripts\setup-worktrees.ps1  # Windows
+.\scripts\setup-submodules.ps1  # Windows
 ```
 
 ### Pull Updates
@@ -195,7 +195,7 @@ When adding dependencies to `external/openfrontio` for upstream contributions:
 # 1. Auto-toggle to enable git tracking
 rush toggle-compat
 
-# 2. Add dependency in the worktree
+# 2. Add dependency in the submodule
 cd external/openfrontio
 npm install new-package
 
@@ -237,7 +237,7 @@ rush toggle-compat --mode on
 .\scripts\toggle-rush-compat.ps1 -Mode off  # Windows
 ```
 
-See `docs/WORKTREE_WORKFLOW.md` for detailed guide.
+See `docs/SUBMODULE_WORKFLOW.md` for detailed guide.
 
 ## OpenFrontIO Package Details
 
@@ -290,13 +290,13 @@ Located at `external/openfrontio/`:
 | Package not found | Check rush.json registration, then run `rush update` |
 | Dependency mismatch | Run `rush update --full` |
 | Build failures | Check package build logs, ensure dependencies installed |
-| Worktree missing | Run `./scripts/setup-worktrees.sh` (or `.ps1` on Windows) |
+| Submodule missing | Run `./scripts/setup-submodules.sh` (or `.ps1` on Windows) |
 
 ## Documentation
 
 - **docs/MONOREPO.md** - Comprehensive monorepo guide
 - **docs/ADDING_PACKAGES.md** - Step-by-step package creation
-- **docs/WORKTREE_WORKFLOW.md** - Git worktree workflow details
+- **docs/SUBMODULE_WORKFLOW.md** - Git submodule workflow details
 - **README.md** - Quick start and overview
 
 ## Resources

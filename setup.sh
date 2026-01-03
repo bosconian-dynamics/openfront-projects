@@ -39,9 +39,9 @@ else
 fi
 echo ""
 
-# Setup git worktrees for external dependencies
-echo "🔧 Setting up git worktrees..."
-./scripts/setup-worktrees.sh
+# Setup git submodules for external dependencies
+echo "🔧 Setting up git submodules..."
+./scripts/setup-submodules.sh
 echo ""
 
 # Run rush update
