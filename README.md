@@ -21,54 +21,36 @@ This repository uses [Microsoft Rush](https://rushjs.io/) to manage multiple pac
 
 ### 🚀 First-Time Setup
 
-This monorepo uses git submodules for external dependencies. Before running Rush commands, you need to set up the submodules:
+This monorepo uses git submodules for external dependencies. We use PowerShell scripts for cross-platform compatibility.
 
-**Linux/macOS:**
+**All Platforms:**
 ```bash
 # Clone the repository
 git clone https://github.com/bosconian-dynamics/openfront-projects.git
 cd openfront-projects
 
-# Run the setup script
-./scripts/setup-submodules.sh
-rush update
-rush build
+# Run the setup script (installs PowerShell if needed on Linux)
+./setup.sh        # Linux/macOS (installs PowerShell and delegates to setup.ps1)
+# or
+pwsh ./setup.ps1  # If PowerShell is already installed
+# or
+./setup.ps1       # Windows (PowerShell is pre-installed)
 ```
 
-**Windows (PowerShell):**
-```powershell
-# Clone the repository
-git clone https://github.com/bosconian-dynamics/openfront-projects.git
-cd openfront-projects
-
-# Run the setup script
-.\scripts\setup-submodules.ps1
-rush update
-rush build
-```
+The setup script will:
+1. Install PowerShell if needed (Linux/macOS with confirmation prompt)
+2. Check for Node.js and npm
+3. Install Rush globally
+4. Set up git submodules
+5. Install dependencies
 
 See [docs/SUBMODULE_WORKFLOW.md](docs/SUBMODULE_WORKFLOW.md) for detailed information about working with submodules.
 
 **Quick tip:** When adding dependencies to external packages for upstream contributions, use:
-```bash
-rush toggle-compat          # Auto-toggle to opposite mode
+```powershell
+pwsh ./scripts/toggle-rush-compat.ps1          # Auto-toggle to opposite mode
 # ... make changes and commit ...
-rush toggle-compat          # Auto-toggle back
-```
-
-### Alternative: Quick Setup Script
-
-**Quick Setup (Uses existing setup scripts):**
-
-```bash
-# Clone the repository
-git clone https://github.com/bosconian-dynamics/openfront-projects.git
-cd openfront-projects
-
-# Run the setup script
-./setup.sh        # For Linux/macOS
-# or
-./setup.ps1       # For Windows/PowerShell
+pwsh ./scripts/toggle-rush-compat.ps1          # Auto-toggle back
 ```
 
 ### Using VSCode Dev Container
@@ -102,8 +84,8 @@ openfront-projects/
 ├── packages/               # Internal packages (one level deep)
 │   └── [package-name]/     # Individual package directories
 ├── scripts/                # Monorepo setup scripts
-  ├── setup-submodules.sh  # Setup submodules (Linux/macOS)
-  └── setup-submodules.ps1 # Setup submodules (Windows)
+│   ├── setup-submodules.ps1 # Setup submodules (PowerShell)
+│   └── toggle-rush-compat.ps1 # Toggle Rush compatibility (PowerShell)
 └── rush.json               # Main Rush configuration
 ```
 

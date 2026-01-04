@@ -60,7 +60,7 @@ jobs:
 
       - name: Setup submodules
         run: |
-          bash scripts/setup-submodules.sh
+          pwsh -File scripts/setup-submodules.ps1
 
       - name: Verify Change Logs
         run: node common/scripts/install-run-rush.js change --verify

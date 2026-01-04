@@ -117,20 +117,24 @@ rushx <script-name>  # Run a package.json script
 
 4. Run `rush update` to register the package
 
-## OpenFrontIO Worktree
+## OpenFrontIO Submodule
 
-The `external/openfrontio` directory is maintained as a git worktree (separate repository):
+The `external/openfrontio` directory is maintained as a git submodule (separate repository):
 - **Repository**: https://github.com/bosconian-dynamics/OpenFrontIO
 - **Upstream**: https://github.com/openfrontio/OpenFrontIO
 
 ### Setup (one-time)
-```bash
-./scripts/setup-worktrees.sh  # Linux/macOS
-# or
-.\scripts\setup-worktrees.ps1  # Windows
+```powershell
+# Use the main setup script (cross-platform)
+./setup.sh        # Linux/macOS (installs PowerShell if needed)
+pwsh ./setup.ps1  # If PowerShell already installed
+./setup.ps1       # Windows
+
+# Or run submodule setup directly
+pwsh ./scripts/setup-submodules.ps1
 ```
 
-### Worktree Commands
+### Submodule Commands
 
 Pull updates:
 ```bash
