@@ -252,22 +252,6 @@ pwsh ./scripts/toggle-rush-compat.ps1 -Mode on -WorktreePath external/openfronti
 4. **Keep Rush compatibility on** - Only disable it temporarily for upstream contributions
 5. **Pin stable versions** - Prefer tagged releases over commit hashes when possible
 
-## Migration from Worktrees
-
-If you're migrating from the old worktree setup:
-
-1. **Remove old worktree:**
-   ```bash
-   git worktree remove external/openfrontio --force
-   ```
-
-2. **Setup new submodule:**
-   ```powershell
-   pwsh ./scripts/setup-submodules.ps1
-   ```
-
-3. **Update your workflow** - Use submodule commands instead of worktree commands
-
 ## Daily Operations
 
 ### Building and Running
