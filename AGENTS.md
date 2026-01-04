@@ -166,10 +166,14 @@ OpenFrontIO at `external/openfrontio` is a git submodule (separate repository):
 - **Upstream:** https://github.com/openfrontio/OpenFrontIO
 
 ### Setup (one-time)
-```bash
-./scripts/setup-submodules.sh  # Linux/macOS
-# or
-.\scripts\setup-submodules.ps1  # Windows
+```powershell
+# All platforms (PowerShell)
+pwsh ./scripts/setup-submodules.ps1
+
+# Or use the main setup script
+./setup.sh        # Linux/macOS (installs PowerShell if needed)
+pwsh ./setup.ps1  # If PowerShell already installed
+./setup.ps1       # Windows
 ```
 
 ### Pull Updates
@@ -227,14 +231,10 @@ rush toggle-compat --mode on
 ```
 
 **Alternative script usage:**
-```bash
-# Direct script usage (from repo root)
-./scripts/toggle-rush-compat.sh        # Auto-toggle (Linux/macOS)
-.\scripts\toggle-rush-compat.ps1       # Auto-toggle (Windows)
-
-# Explicit modes
-./scripts/toggle-rush-compat.sh off    # Linux/macOS
-.\scripts\toggle-rush-compat.ps1 -Mode off  # Windows
+```powershell
+# Direct script usage (from repo root) - PowerShell cross-platform
+pwsh ./scripts/toggle-rush-compat.ps1       # Auto-toggle
+pwsh ./scripts/toggle-rush-compat.ps1 -Mode off  # Explicit mode
 ```
 
 See `docs/SUBMODULE_WORKFLOW.md` for detailed guide.
@@ -290,7 +290,7 @@ Located at `external/openfrontio/`:
 | Package not found | Check rush.json registration, then run `rush update` |
 | Dependency mismatch | Run `rush update --full` |
 | Build failures | Check package build logs, ensure dependencies installed |
-| Submodule missing | Run `./scripts/setup-submodules.sh` (or `.ps1` on Windows) |
+| Submodule missing | Run `pwsh ./scripts/setup-submodules.ps1` or `./setup.sh` |
 
 ## Documentation
 

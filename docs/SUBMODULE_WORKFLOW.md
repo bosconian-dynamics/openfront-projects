@@ -42,9 +42,15 @@ rush build
 ```bash
 git clone https://github.com/bosconian-dynamics/openfront-projects.git
 cd openfront-projects
-./scripts/setup-submodules.sh  # Linux/macOS
+
+# Use the main setup script (cross-platform)
+./setup.sh        # Linux/macOS (installs PowerShell if needed)
 # or
-.\scripts\setup-submodules.ps1  # Windows (PowerShell)
+pwsh ./setup.ps1  # If PowerShell already installed
+./setup.ps1       # Windows
+
+# Or run submodule setup directly
+pwsh ./scripts/setup-submodules.ps1
 rush update
 rush build
 ```
@@ -129,18 +135,20 @@ git commit -m "Update OpenFrontIO with upstream changes"
 OpenFrontIO requires local modifications to work with Rush. These are managed by the toggle scripts:
 
 **Enable Rush compatibility:**
-```bash
-./scripts/toggle-rush-compat.sh on external/openfrontio
+```powershell
+pwsh ./scripts/toggle-rush-compat.ps1 -Mode on -WorktreePath external/openfrontio
 ```
 
 **Disable Rush compatibility (for upstream contributions):**
-```bash
-./scripts/toggle-rush-compat.sh off external/openfrontio
+```powershell
+pwsh ./scripts/toggle-rush-compat.ps1 -Mode off -WorktreePath external/openfrontio
 ```
 
 **Auto-toggle (detects current state):**
-```bash
-./scripts/toggle-rush-compat.sh auto external/openfrontio
+```powershell
+pwsh ./scripts/toggle-rush-compat.ps1 -Mode auto -WorktreePath external/openfrontio
+# or simply
+pwsh ./scripts/toggle-rush-compat.ps1  # defaults to auto mode
 ```
 
 ## Contributing to OpenFrontIO Upstream
@@ -148,8 +156,8 @@ OpenFrontIO requires local modifications to work with Rush. These are managed by
 When contributing changes back to the original OpenFrontIO repository:
 
 1. **Disable Rush compatibility:**
-   ```bash
-   ./scripts/toggle-rush-compat.sh off external/openfrontio
+   ```powershell
+   pwsh ./scripts/toggle-rush-compat.ps1 -Mode off -WorktreePath external/openfrontio
    ```
 
 2. **Make your changes and commit:**
@@ -169,9 +177,9 @@ When contributing changes back to the original OpenFrontIO repository:
 4. **Create PR on GitHub** to `openfrontio/OpenFrontIO`
 
 5. **Re-enable Rush compatibility:**
-   ```bash
+   ```powershell
    cd ../..
-   ./scripts/toggle-rush-compat.sh on external/openfrontio
+   pwsh ./scripts/toggle-rush-compat.ps1 -Mode on -WorktreePath external/openfrontio
    ```
 
 ## Common Tasks
@@ -232,8 +240,8 @@ git commit -m "Update submodule version"
 
 ### Cannot push because of dirty submodule
 Make sure Rush compatibility is properly configured:
-```bash
-./scripts/toggle-rush-compat.sh on external/openfrontio
+```powershell
+pwsh ./scripts/toggle-rush-compat.ps1 -Mode on -WorktreePath external/openfrontio
 ```
 
 ## Best Practices
@@ -254,8 +262,8 @@ If you're migrating from the old worktree setup:
    ```
 
 2. **Setup new submodule:**
-   ```bash
-   ./scripts/setup-submodules.sh
+   ```powershell
+   pwsh ./scripts/setup-submodules.ps1
    ```
 
 3. **Update your workflow** - Use submodule commands instead of worktree commands
@@ -393,11 +401,11 @@ rush toggle-compat --mode on
 
 #### Using Scripts Directly
 
-```bash
+```powershell
 cd external/openfrontio
 
 # 1. Auto-toggle (detects current state and switches to opposite)
-../scripts/toggle-rush-compat.sh
+pwsh ../scripts/toggle-rush-compat.ps1
 
 # 2. Make your changes
 npm install some-new-package
@@ -405,20 +413,15 @@ git add package.json package-lock.json
 git commit -m "Add dependency"
 
 # 3. Auto-toggle back
-../scripts/toggle-rush-compat.sh
+pwsh ../scripts/toggle-rush-compat.ps1
 ```
 
 **Explicit mode control with scripts:**
-```bash
-# Bash (Linux/macOS)
-./scripts/toggle-rush-compat.sh off    # Force disable Rush compatibility
-./scripts/toggle-rush-compat.sh on     # Force enable Rush compatibility
-./scripts/toggle-rush-compat.sh auto   # Auto-detect and toggle (default)
-
-# PowerShell (Windows)
-.\scripts\toggle-rush-compat.ps1 -Mode off
-.\scripts\toggle-rush-compat.ps1 -Mode on
-.\scripts\toggle-rush-compat.ps1 -Mode auto  # Default if -Mode omitted
+```powershell
+# PowerShell (cross-platform)
+pwsh ./scripts/toggle-rush-compat.ps1 -Mode off    # Force disable Rush compatibility
+pwsh ./scripts/toggle-rush-compat.ps1 -Mode on     # Force enable Rush compatibility
+pwsh ./scripts/toggle-rush-compat.ps1 -Mode auto   # Auto-detect and toggle (default)
 ```
 
 ### Manual Process (Not Recommended)
@@ -461,23 +464,18 @@ If you need to manage this manually for some reason:
 
 ### Available Toggle Scripts
 
-The repository includes cross-platform scripts for managing Rush compatibility:
+The repository includes PowerShell scripts for managing Rush compatibility (cross-platform):
 
-- **`scripts/toggle-rush-compat.sh`** - Bash script (Linux/macOS)
-- **`scripts/toggle-rush-compat.ps1`** - PowerShell script (Windows)
+- **`scripts/toggle-rush-compat.ps1`** - PowerShell script (cross-platform)
 
 **Script Usage:**
-```bash
+```powershell
 # Auto-toggle (detect current state and switch to opposite) - RECOMMENDED
-./scripts/toggle-rush-compat.sh
-./scripts/toggle-rush-compat.sh auto
+pwsh ./scripts/toggle-rush-compat.ps1
+pwsh ./scripts/toggle-rush-compat.ps1 -Mode auto
 
 # Explicit mode control
-./scripts/toggle-rush-compat.sh [on|off] [optional-worktree-path]
-
-# PowerShell (Windows)
-.\scripts\toggle-rush-compat.ps1                    # Auto-toggle (default)
-.\scripts\toggle-rush-compat.ps1 -Mode [on|off|auto] [-WorktreePath path]
+pwsh ./scripts/toggle-rush-compat.ps1 -Mode [on|off] -WorktreePath [optional-worktree-path]
 
 # Via Rush (any platform) - RECOMMENDED
 rush toggle-compat                    # Auto-toggle (default)
@@ -486,11 +484,6 @@ rush toggle-compat --mode [on|off|auto]
 
 **How Auto-Detection Works:**
 The scripts detect the current mode by checking if `package.json` contains `"version": "0.0.0-external"`. If present, Rush compatibility is ON and will be toggled OFF. If absent, it's OFF and will be toggled ON.
-
-2. **Revert local changes:**
-   ```bash
-   git checkout package.json
-   ```
    This removes the local-only modifications (version and build script).
 
 3. **Make your upstream changes:**

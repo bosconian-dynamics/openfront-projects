@@ -47,15 +47,24 @@ openfront-projects/
 ### Initial Setup
 
 ```bash
-# Install Rush globally (if not already installed)
+# Run the setup script (installs PowerShell if needed, installs Rush, sets up submodules)
+./setup.sh        # Linux/macOS (installs PowerShell and delegates to setup.ps1)
+# or
+pwsh ./setup.ps1  # If PowerShell is already installed
+
+# Alternatively, manually install Rush and update dependencies
 npm install -g @microsoft/rush
-
-# Install all package dependencies
 rush update
-
-# Build all packages
 rush build
 ```
+
+### Setup Scripts
+
+This repository uses PowerShell scripts for cross-platform compatibility:
+- `setup.sh` - Bootstrap script for Linux/macOS (installs PowerShell if needed, then runs setup.ps1)
+- `setup.ps1` - Main setup script (PowerShell, cross-platform)
+- `scripts/setup-submodules.ps1` - Initialize and configure git submodules
+- `scripts/toggle-rush-compat.ps1` - Toggle Rush compatibility for external packages
 
 ### Common Commands
 
