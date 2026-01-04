@@ -96,7 +96,9 @@ install_powershell_alpine() {
     apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache lttng-ust
     
     # Download and install PowerShell
-    curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.4.0/powershell-7.4.0-linux-musl-x64.tar.gz -o /tmp/powershell.tar.gz
+    # Using v7.4.0 for stability - update this version as needed for newer releases
+    PWSH_VERSION="7.4.0"
+    curl -L "https://github.com/PowerShell/PowerShell/releases/download/v${PWSH_VERSION}/powershell-${PWSH_VERSION}-linux-musl-x64.tar.gz" -o /tmp/powershell.tar.gz
     mkdir -p /opt/microsoft/powershell/7
     tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
     chmod +x /opt/microsoft/powershell/7/pwsh
@@ -125,6 +127,7 @@ install_powershell_debian_ubuntu() {
             ;;
         *)
             # For Debian or other versions, try to detect
+            # Add new versions here as they're released and tested
             if [ "$OS_ID" = "debian" ]; then
                 case "$OS_VERSION_ID" in
                     11)
@@ -132,6 +135,9 @@ install_powershell_debian_ubuntu() {
                         ;;
                     12)
                         UBUNTU_CODENAME="bookworm"
+                        ;;
+                    13)
+                        UBUNTU_CODENAME="trixie"
                         ;;
                 esac
             fi
@@ -145,7 +151,8 @@ install_powershell_debian_ubuntu() {
         apt-get update
         apt-get install -y powershell
     else
-        echo "Warning: Could not detect specific version, attempting generic install..."
+        # Fallback for unsupported versions - attempts generic installation
+        echo "Warning: Version $OS_VERSION_ID not explicitly supported, attempting generic install..."
         apt-get install -y powershell || {
             echo "❌ Failed to install PowerShell via apt"
             echo "Please install PowerShell manually from:"
